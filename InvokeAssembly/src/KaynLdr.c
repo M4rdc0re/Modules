@@ -5,6 +5,23 @@
 
 #include <KaynLdr.h>
 
+/* Locate image base by walking backwards from this function for MZ/'PE\0\0' (replaces Util.s). */
+LPVOID KaynCaller(void)
+{
+    unsigned char *p = (unsigned char *)(void *)&KaynCaller;
+    for (;;) {
+        p--;
+        if (p[0] != 'M' || p[1] != 'Z')
+            continue;
+        {
+            DWORD e_lfanew = *(DWORD *)(p + 0x3C);
+            unsigned char *nt = p + e_lfanew;
+            if (nt[0] == 'P' && nt[1] == 'E' && nt[2] == 0 && nt[3] == 0)
+                return (LPVOID)p;
+        }
+    }
+}
+
 DLLEXPORT VOID KaynLoader( LPVOID lpParameter )
 {
     KAYNINSTANCE            Instance        = { 0 };

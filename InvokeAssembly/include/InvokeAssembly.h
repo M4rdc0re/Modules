@@ -30,6 +30,7 @@ typedef IUnknown*           PIUnknown;
 
 BOOL W32CreateClrInstance( LPCWSTR dotNetVersion, PICLRMetaHost *ppClrMetaHost, PICLRRuntimeInfo *ppClrRuntimeInfo, ICorRuntimeHost **ppICorRuntimeHost );
 VOID InvokeAssembly( PPARSER DataArgs );
+VOID VxPatchAmsiEtw( void );
 
 typedef void* HDOMAINENUM;
 

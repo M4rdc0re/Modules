@@ -23,5 +23,5 @@ typedef struct _INSTANCE {
 
 extern INSTANCE Instance;
 
-VOID ModuleInit();
-VOID ModuleMain();
+VOID ModuleInit(void);
+VOID ModuleMain(PVOID Params);

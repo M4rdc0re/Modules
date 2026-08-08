@@ -13,7 +13,8 @@ VOID ParserNew( PPARSER parser, PCHAR buffer )
 
     parser->buffer      = buffer + sizeof( UINT32 );
     parser->original    = buffer;
-    parser->length      = Size - sizeof( UINT32 );
+    /* Size is payload length (Packer.p.size), not including this header dword. */
+    parser->length      = Size;
 }
 
 INT32 ParserGetInt32( PPARSER parser )
