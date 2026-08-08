@@ -1,11 +1,11 @@
-from havoc import Demon, RegisterCommand, RegisterModule
+from vaelix_host import Agent, RegisterCommand, RegisterModule
 import re
 
-def get_delegation( demonID, *params ):
+def get_delegation( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     del_query = {
         'constrained': '(&(objectCategory=computer)(userAccountControl:1.2.840.113556.1.4.803:=16777216))',
@@ -27,15 +27,15 @@ def get_delegation( demonID, *params ):
     domain = ''
 
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     if params[ 0 ].lower() not in del_query:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Wrong first parameter" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Wrong first parameter" )
         return False
 
     query = del_query[ params[ 0 ].lower() ]
@@ -60,17 +60,17 @@ def get_delegation( demonID, *params ):
     packer.addstr(hostname)
     packer.addstr(domain)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to run ldap query" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to run ldap query" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/ldapsearch.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/ldapsearch.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def get_spns( demonID, *params ):
+def get_spns( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     num_params = len(params)
     query = '(&(samAccountType=805306368)(!samAccountName=krbtgt)(serviceprincipalname=*)(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))'
@@ -80,7 +80,7 @@ def get_spns( demonID, *params ):
     domain = ''
 
     if num_params > 0:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     # not used
@@ -102,18 +102,18 @@ def get_spns( demonID, *params ):
     packer.addstr(hostname)
     packer.addstr(domain)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to run ldap query" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to run ldap query" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/ldapsearch.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/ldapsearch.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
 
-def get_asrep( demonID, *params ):
+def get_asrep( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     num_params = len(params)
     query = '(&(userAccountControl:1.2.840.113556.1.4.803:=4194304)(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))'
@@ -123,7 +123,7 @@ def get_asrep( demonID, *params ):
     domain = ''
 
     if num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     # not used
@@ -145,9 +145,9 @@ def get_asrep( demonID, *params ):
     packer.addstr(hostname)
     packer.addstr(domain)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to run ldap query" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to run ldap query" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/ldapsearch.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/ldapsearch.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 

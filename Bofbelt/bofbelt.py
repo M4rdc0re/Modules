@@ -1,33 +1,33 @@
-from havoc import Demon, RegisterCommand
+from vaelix_host import Agent, RegisterCommand
 import json
 import re
 import os
 
-def ipconfig_with_callback( demonID, callback, *params ):
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+def ipconfig_with_callback( agentID, callback, *params ):
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    return demon.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/ipconfig.{demon.ProcessArch}.o", b'' )
+    return agent.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/ipconfig.{agent.ProcessArch}.o", b'' )
 
-def uptime_with_callback( demonID, callback, *params ):
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+def uptime_with_callback( agentID, callback, *params ):
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    return demon.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/uptime.{demon.ProcessArch}.o", b'' )
+    return agent.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/uptime.{agent.ProcessArch}.o", b'' )
 
-def whoami_with_callback( demonID, callback, *params ):
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+def whoami_with_callback( agentID, callback, *params ):
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    return demon.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/whoami.{demon.ProcessArch}.o", b'' )
+    return agent.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/whoami.{agent.ProcessArch}.o", b'' )
 
-def windowlist_with_callback( demonID, callback, *params ):
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+def windowlist_with_callback( agentID, callback, *params ):
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    return demon.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/windowlist.{demon.ProcessArch}.o", b'' )
+    return agent.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/windowlist.{agent.ProcessArch}.o", b'' )
 
-def reg_query_parse_params( demon, params ):
+def reg_query_parse_params( agent, params ):
     packer = Packer()
 
     reghives = {
@@ -41,11 +41,11 @@ def reg_query_parse_params( demon, params ):
     params_parsed = 0
 
     if num_params < 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Missing parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Missing parameters" )
         return None
 
     if num_params > 4:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     if params[ params_parsed ].upper() not in reghives:
@@ -55,14 +55,14 @@ def reg_query_parse_params( demon, params ):
         hostname = None
 
     if params[ params_parsed ].upper() not in reghives:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Provided registry hive value is invalid" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Provided registry hive value is invalid" )
         return None
 
     hive = reghives[ params[ params_parsed ].upper() ]
     params_parsed += 1
 
     if num_params < params_parsed + 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Missing parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Missing parameters" )
         return None
 
     path = params[ params_parsed ]
@@ -81,17 +81,17 @@ def reg_query_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def reg_query_with_callback( demonID, callback, *params ):
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+def reg_query_with_callback( agentID, callback, *params ):
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = reg_query_parse_params( demon, params )
+    packed_params = reg_query_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    return demon.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/reg_query.{demon.ProcessArch}.o", packed_params )
+    return agent.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/reg_query.{agent.ProcessArch}.o", packed_params )
 
-def wmi_query_parse_params( demon, params ):
+def wmi_query_parse_params( agent, params ):
     packer = Packer()
 
     query     = ''
@@ -101,11 +101,11 @@ def wmi_query_parse_params( demon, params ):
     num_params = len(params)
 
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Missing parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Missing parameters" )
         return None
 
     if num_params > 3:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     query = params[ 0 ]
@@ -125,35 +125,35 @@ def wmi_query_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def wmi_query_with_callback( demonID, callback, *params ):
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+def wmi_query_with_callback( agentID, callback, *params ):
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = wmi_query_parse_params( demon, params )
+    packed_params = wmi_query_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    return demon.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/wmi_query.{demon.ProcessArch}.o", packed_params )
+    return agent.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/wmi_query.{agent.ProcessArch}.o", packed_params )
 
-def env_with_callback( demonID, callback, *params ):
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+def env_with_callback( agentID, callback, *params ):
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    return demon.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/env.{demon.ProcessArch}.o", b'' )
+    return agent.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/env.{agent.ProcessArch}.o", b'' )
 
-def enumlocalsessions_with_callback( demonID, callback, *params ):
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+def enumlocalsessions_with_callback( agentID, callback, *params ):
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
     num_params = len(params)
 
     if num_params > 0:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
-    return demon.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/enumlocalsessions.{demon.ProcessArch}.o", b'' )
+    return agent.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/enumlocalsessions.{agent.ProcessArch}.o", b'' )
 
-def userenum_parse_parans( demon, params ):
+def userenum_parse_parans( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -169,11 +169,11 @@ def userenum_parse_parans( demon, params ):
 
     if num_params == 1:
         if params[ 0 ].lower() not in enumtype:
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, "Parameter not in: [all, locked, disabled, active]" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, "Parameter not in: [all, locked, disabled, active]" )
             return None
         _type = enumtype[ params[ 0 ].lower() ]
     elif num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.adduint32(0)
@@ -181,17 +181,17 @@ def userenum_parse_parans( demon, params ):
 
     return packer.getbuffer()
 
-def userenum_with_callback( demonID, callback, *params ):
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+def userenum_with_callback( agentID, callback, *params ):
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = userenum_parse_parans( demon, params )
+    packed_params = userenum_parse_parans( agent, params )
     if packed_params is None:
         return False
 
-    return demon.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/netuserenum.{demon.ProcessArch}.o", packed_params )
+    return agent.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/netuserenum.{agent.ProcessArch}.o", packed_params )
 
-def bofdir_parse_params( demon, params ):
+def bofdir_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -199,14 +199,14 @@ def bofdir_parse_params( demon, params ):
     subdirs    = 0
 
     if num_params > 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     if num_params > 0:
         targetdir = params[0]
 
     if num_params == 2 and params[1] != '/s':
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid parameter: {params[1]}" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid parameter: {params[1]}" )
         return None
 
     if num_params == 2 and params[1] == '/s':
@@ -217,39 +217,39 @@ def bofdir_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def bofdir( demonID, *params ):
+def bofdir( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = bofdir_parse_params( demon, params )
+    packed_params = bofdir_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to list a directory" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to list a directory" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/dir.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/dir.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def bofdir_with_callback( demonID, callback, *params ):
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+def bofdir_with_callback( agentID, callback, *params ):
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = bofdir_parse_params( demon, params )
+    packed_params = bofdir_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    return demon.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/dir.{demon.ProcessArch}.o", packed_params )
+    return agent.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/dir.{agent.ProcessArch}.o", packed_params )
 
-def tasklist_parse_params( demon, params ):
+def tasklist_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
     hostname   = ''
 
     if num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     if num_params > 0:
@@ -259,30 +259,30 @@ def tasklist_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def tasklist( demonID, *params ):
+def tasklist( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = tasklist_parse_params( demon, params )
+    packed_params = tasklist_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon list running processes" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent list running processes" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/tasklist.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/tasklist.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def tasklist_with_callback( demonID, callback, *params ):
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+def tasklist_with_callback( agentID, callback, *params ):
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = tasklist_parse_params( demon, params )
+    packed_params = tasklist_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    return demon.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/tasklist.{demon.ProcessArch}.o", packed_params )
+    return agent.InlineExecuteGetOutput( callback, "go", f"ObjectFiles/tasklist.{agent.ProcessArch}.o", packed_params )
 
 def callback_output_failed(bof_output):
     return bof_output['worked'] is False or bof_output['error'] != '' or bof_output['output'] == ''
@@ -694,9 +694,9 @@ def open_windows_info(bof_output):
 
     return info
 
-def bofbelt_report( demonID, bof_output ):
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+def bofbelt_report( agentID, bof_output ):
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
     #print(json.dumps(bof_output, indent=2))
 
@@ -715,118 +715,118 @@ def bofbelt_report( demonID, bof_output ):
         report['open_windows']   = open_windows_info(bof_output)
         #print(json.dumps(report, indent=2))
     except Exception as e:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Failed to parse BOF data: {e}" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Failed to parse BOF data: {e}" )
         return True
 
     # OS
 
     try:
-        demon.ConsoleWrite( demon.CONSOLE_INFO, "OS Information" )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"OS           : {report['os']['ProductName']}" )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"Version      : max:{report['os']['CurrentMajorVersionNumber']}, min:{report['os']['CurrentVersion']}" )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"Build        : {report['os']['CurrentBuildNumber']}" )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"OS Arch      : {'x64' if report['os']['arch'] == 'AMD64' else 'x86'}" )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"Process Arch : {demon.ProcessArch}" )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"IP           : {report['os']['ip']}" )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"DNS          : {report['os']['DNS']}" )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"Domain       : {demon.Domain if demon.Domain else 'Not joined'}" )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"PPL          : {'Enabled (!)' if report['os']['PPL'] else 'Disabled'}" )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"AppLocker    : {'Enabled (!)' if report['os']['AppLocker'] else 'Disabled'}" )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, '')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, "OS Information" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"OS           : {report['os']['ProductName']}" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"Version      : max:{report['os']['CurrentMajorVersionNumber']}, min:{report['os']['CurrentVersion']}" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"Build        : {report['os']['CurrentBuildNumber']}" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"OS Arch      : {'x64' if report['os']['arch'] == 'AMD64' else 'x86'}" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"Process Arch : {agent.ProcessArch}" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"IP           : {report['os']['ip']}" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"DNS          : {report['os']['DNS']}" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"Domain       : {agent.Domain if agent.Domain else 'Not joined'}" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"PPL          : {'Enabled (!)' if report['os']['PPL'] else 'Disabled'}" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"AppLocker    : {'Enabled (!)' if report['os']['AppLocker'] else 'Disabled'}" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, '')
     except Exception as e:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Error obtaining OS Information: {e}" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Error obtaining OS Information: {e}" )
 
     # user
 
     try:
-        demon.ConsoleWrite( demon.CONSOLE_INFO, "User Information" )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"Username        : {report['user']['username']}" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, "User Information" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"Username        : {report['user']['username']}" )
         isLocalAdmin_text = 'Yes' if report['user']['isLocalAdmin'] else 'No'
         integrity_text = report['user']['integrity']
         if report['user']['isLocalAdmin'] and report['user']['integrity'] == 'Medium':
             integrity_text += '[!] In medium integrity but user is a local administrator - UAC can be bypassed.'
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"IsLocalAdmin    : {isLocalAdmin_text}" )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"Integrity Level : {integrity_text}" )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"Group memberships" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"IsLocalAdmin    : {isLocalAdmin_text}" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"Integrity Level : {integrity_text}" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"Group memberships" )
         for group in report['user']['groups']:
-            demon.ConsoleWrite( demon.CONSOLE_INFO, f' - {group}' )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"Privileges" )
+            agent.ConsoleWrite( agent.CONSOLE_INFO, f' - {group}' )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"Privileges" )
         for priv in report['user']['privs']:
-            demon.ConsoleWrite( demon.CONSOLE_INFO, f' - {priv}' )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f'' )
+            agent.ConsoleWrite( agent.CONSOLE_INFO, f' - {priv}' )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f'' )
     except Exception as e:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Error obtaining User Information: {e}" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Error obtaining User Information: {e}" )
 
     # powershell
 
     try:
-        demon.ConsoleWrite( demon.CONSOLE_INFO, "PowerShell Information" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, "PowerShell Information" )
         osSupportsAmsi = int(report['os']['CurrentMajorVersionNumber']) >= 10
         supported_text = 'Yes' if osSupportsAmsi else 'No'
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"AMSI support: {supported_text}" )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"CLRs installed" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"AMSI support: {supported_text}" )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"CLRs installed" )
         for clr in report['ps']['CLRs']:
-            demon.ConsoleWrite( demon.CONSOLE_INFO, f' - {clr[1:]}' )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f"Versions installed" )
+            agent.ConsoleWrite( agent.CONSOLE_INFO, f' - {clr[1:]}' )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f"Versions installed" )
         for ver in report['ps']['versions']:
             if ver == '2.0':
                 if 'v2.0.50727' not in report['ps']['CLRs']:
                     ver += ' [!] Version 2.0.50727 of the CLR is not installed - PowerShell v2.0 won\'t be able to run.'
                 elif osSupportsAmsi:
                     ver += ' [!] This version does not support AMSI'
-            demon.ConsoleWrite( demon.CONSOLE_INFO, f' - {ver}' )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f'Transcription Logging Settings' )
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f'    Enabled            : {report["ps"]["EnableTranscripting"]}')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f'    Invocation Logging : {report["ps"]["EnableInvocationHeader"]}')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, 'Module Logging Settings')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f'    Enabled            : {report["ps"]["EnableModuleLogging"]}')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, 'Script Block Logging Settings')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f'    Enabled            : {report["ps"]["EnableScriptBlockLogging"]}')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f'    Invocation Logging : {report["ps"]["EnableScriptBlockInvocationLogging"]}')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, '')
+            agent.ConsoleWrite( agent.CONSOLE_INFO, f' - {ver}' )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f'Transcription Logging Settings' )
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f'    Enabled            : {report["ps"]["EnableTranscripting"]}')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f'    Invocation Logging : {report["ps"]["EnableInvocationHeader"]}')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, 'Module Logging Settings')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f'    Enabled            : {report["ps"]["EnableModuleLogging"]}')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, 'Script Block Logging Settings')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f'    Enabled            : {report["ps"]["EnableScriptBlockLogging"]}')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f'    Invocation Logging : {report["ps"]["EnableScriptBlockInvocationLogging"]}')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, '')
     except Exception as e:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Error obtaining PowerShell Information: {e}" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Error obtaining PowerShell Information: {e}" )
 
     # .NET
 
     try:
-        demon.ConsoleWrite( demon.CONSOLE_INFO, '.NET Information')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, '.NET Information')
         latest_version = report['dotnet']['.NET']['versions'][-1]
         highestVersion_Major = int(latest_version.split('.')[0])
         highestVersion_Minor = int(latest_version.split('.')[1])
         supports_amsi = highestVersion_Major > 4 or (highestVersion_Major == 4 and highestVersion_Minor >= 8)
         supported_text = 'Yes' if supports_amsi else 'No'
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f'AMSI support: {supported_text}')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, 'CLRs installed')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f'AMSI support: {supported_text}')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, 'CLRs installed')
         for clr in report['ps']['CLRs']:
-            demon.ConsoleWrite( demon.CONSOLE_INFO, f' - {clr[1:]}')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, '.NET versions installed')
+            agent.ConsoleWrite( agent.CONSOLE_INFO, f' - {clr[1:]}')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, '.NET versions installed')
         for ver in report['dotnet']['.NET']['versions']:
             high = int(ver.split('.')[0])
             low = int(ver.split('.')[1])
             if (high < 4 or (high == 4 and low < 8)) and supports_amsi:
                 ver += ' [!] This version does not support AMSI'
-            demon.ConsoleWrite( demon.CONSOLE_INFO, f' - {ver}')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, '')
+            agent.ConsoleWrite( agent.CONSOLE_INFO, f' - {ver}')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, '')
     except Exception as e:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f'Error obtaining .NET Information: {e}')
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f'Error obtaining .NET Information: {e}')
 
     # AV/EDR
 
     try:
-        demon.ConsoleWrite( demon.CONSOLE_INFO, ('AVs/EDRs Information'))
+        agent.ConsoleWrite( agent.CONSOLE_INFO, ('AVs/EDRs Information'))
         for name in report['avedr']['AVs']:
-            demon.ConsoleWrite( demon.CONSOLE_INFO, f' - {name}')
+            agent.ConsoleWrite( agent.CONSOLE_INFO, f' - {name}')
         if len(report['avedr']['AVs']) == 0:
-            demon.ConsoleWrite( demon.CONSOLE_INFO, '- None found')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, '')
+            agent.ConsoleWrite( agent.CONSOLE_INFO, '- None found')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, '')
     except Exception as e:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f'Error obtaining AVs/EDRs Information: {e}')
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f'Error obtaining AVs/EDRs Information: {e}')
 
     # processes
 
     try:
-        demon.ConsoleWrite( demon.CONSOLE_INFO, 'Processes Information')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, 'Processes Information')
         # TODO: add PID
         printed_data = False
         proctypes = ['browser', 'interesting', 'defensive']
@@ -836,20 +836,20 @@ def bofbelt_report( demonID, bof_output ):
             submenu = submenus[i]
             if len(report['processes'][proctype]) == 0:
                 continue
-            demon.ConsoleWrite( demon.CONSOLE_INFO, submenu)
+            agent.ConsoleWrite( agent.CONSOLE_INFO, submenu)
             for elem in report['processes'][proctype]:
-                demon.ConsoleWrite( demon.CONSOLE_INFO, f' - {elem} -> {report["processes"][proctype][elem]}')
+                agent.ConsoleWrite( agent.CONSOLE_INFO, f' - {elem} -> {report["processes"][proctype][elem]}')
                 printed_data = True
         if printed_data is False:
-            demon.ConsoleWrite( demon.CONSOLE_INFO, '(No interesting processes found)')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, '')
+            agent.ConsoleWrite( agent.CONSOLE_INFO, '(No interesting processes found)')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, '')
     except Exception as e:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f'Error obtaining Processes Information: {e}')
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f'Error obtaining Processes Information: {e}')
 
     # UAC
 
     try:
-        demon.ConsoleWrite( demon.CONSOLE_INFO, 'UAC Information')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, 'UAC Information')
         meaning = {
             '': 'PromptForNonWindowsBinaries',
             0: 'No prompting',
@@ -859,92 +859,92 @@ def bofbelt_report( demonID, bof_output ):
             4: 'PromptForPermitDenyNotOnSecureDesktop',
             5: 'PromptForNonWindowsBinaries'
         }
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f'ConsentPromptBehaviorAdmin    : {report["uac"]["ConsentPromptBehaviorAdmin"]} - {meaning[report["uac"]["ConsentPromptBehaviorAdmin"]]}')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f'ConsentPromptBehaviorAdmin    : {report["uac"]["ConsentPromptBehaviorAdmin"]} - {meaning[report["uac"]["ConsentPromptBehaviorAdmin"]]}')
         text = 'Yes' if report['uac']['EnableLUA'] else 'No'
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f'EnableLUA (Is UAC enabled?)   : {text}')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f'EnableLUA (Is UAC enabled?)   : {text}')
         text = 'Yes' if report['uac']['LocalAccountTokenFilterPolicy'] else 'No'
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f'LocalAccountTokenFilterPolicy : {text}')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f'LocalAccountTokenFilterPolicy : {text}')
         text = 'Yes' if report['uac']['FilterAdministratorToken'] else 'No'
-        demon.ConsoleWrite( demon.CONSOLE_INFO, f'FilterAdministratorToken      : {text}')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, f'FilterAdministratorToken      : {text}')
         if report['uac']['EnableLUA'] is False:
-            demon.ConsoleWrite( demon.CONSOLE_INFO, '[*] UAC is disabled. Any administrative local account can be used for lateral movement.')
+            agent.ConsoleWrite( agent.CONSOLE_INFO, '[*] UAC is disabled. Any administrative local account can be used for lateral movement.')
         else:
             if report['uac']['LocalAccountTokenFilterPolicy'] is False and report['uac']['FilterAdministratorToken'] is False:
-                demon.ConsoleWrite( demon.CONSOLE_INFO, '[*] Default Windows settings - Only the RID-500 local admin account can be used for lateral movement.')
+                agent.ConsoleWrite( agent.CONSOLE_INFO, '[*] Default Windows settings - Only the RID-500 local admin account can be used for lateral movement.')
             elif report['uac']['LocalAccountTokenFilterPolicy'] is True:
-                demon.ConsoleWrite( demon.CONSOLE_INFO, '[*] LocalAccountTokenFilterPolicy == 1. Any administrative local account can be used for lateral movement.')
+                agent.ConsoleWrite( agent.CONSOLE_INFO, '[*] LocalAccountTokenFilterPolicy == 1. Any administrative local account can be used for lateral movement.')
             else:
-                demon.ConsoleWrite( demon.CONSOLE_INFO, '[*] LocalAccountTokenFilterPolicy set to 0 and FilterAdministratorToken == 1. Local accounts cannot be used for lateral movement.')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, '')
+                agent.ConsoleWrite( agent.CONSOLE_INFO, '[*] LocalAccountTokenFilterPolicy set to 0 and FilterAdministratorToken == 1. Local accounts cannot be used for lateral movement.')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, '')
     except Exception as e:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f'Error obtaining UAC Information: {e}')
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f'Error obtaining UAC Information: {e}')
 
     # Local users
 
     try:
-        demon.ConsoleWrite( demon.CONSOLE_INFO, 'Local Users Information')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, 'Local Users Information')
         usernames = report['local_users']['local_users']
         num_users = len(usernames)
         max_num = 10
         if num_users > max_num:
             usernames = usernames[:max_num]
-            demon.ConsoleWrite( demon.CONSOLE_INFO, f'Only showing {max_num} users of {num_users}. Run \'userenum\' to get the full list.')
+            agent.ConsoleWrite( agent.CONSOLE_INFO, f'Only showing {max_num} users of {num_users}. Run \'userenum\' to get the full list.')
         if num_users == 0:
-            demon.ConsoleWrite( demon.CONSOLE_INFO, f'No users found')
+            agent.ConsoleWrite( agent.CONSOLE_INFO, f'No users found')
         for username in usernames:
-            demon.ConsoleWrite( demon.CONSOLE_INFO, f'  - {username}')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, '')
+            agent.ConsoleWrite( agent.CONSOLE_INFO, f'  - {username}')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, '')
     except Exception as e:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f'Error obtaining Local Users Information: {e}')
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f'Error obtaining Local Users Information: {e}')
 
     # Local sessions
 
     try:
-        demon.ConsoleWrite( demon.CONSOLE_INFO, 'Local Sessions Information')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, 'Local Sessions Information')
         sessions = report['local_sessions']['local_sessions']
         if sessions is None:
-            demon.ConsoleWrite( demon.CONSOLE_INFO, f'(Failed to enumerate local sessions)')
+            agent.ConsoleWrite( agent.CONSOLE_INFO, f'(Failed to enumerate local sessions)')
         else:
             num_sessions = len(sessions)
             max_num = 10
             if num_sessions > max_num:
                 sessions = sessions[:max_num]
-                demon.ConsoleWrite( demon.CONSOLE_INFO, f'Only showing {max_num} session of {num_sessions}. Run \'enumLocalSessions\' to get the full list.')
+                agent.ConsoleWrite( agent.CONSOLE_INFO, f'Only showing {max_num} session of {num_sessions}. Run \'enumLocalSessions\' to get the full list.')
             if num_sessions == 0:
-                demon.ConsoleWrite( demon.CONSOLE_INFO, f'No sessions found')
+                agent.ConsoleWrite( agent.CONSOLE_INFO, f'No sessions found')
             for session in sessions:
-                demon.ConsoleWrite( demon.CONSOLE_INFO, f'  - {session}')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, '')
+                agent.ConsoleWrite( agent.CONSOLE_INFO, f'  - {session}')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, '')
     except Exception as e:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f'Error obtaining Local Sessions Information: {e}')
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f'Error obtaining Local Sessions Information: {e}')
 
     try:
-        demon.ConsoleWrite( demon.CONSOLE_INFO, 'Open windows Information')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, 'Open windows Information')
         windows = report['open_windows']['open_windows']
         if windows is None:
-            demon.ConsoleWrite( demon.CONSOLE_INFO, f'(Failed to enumerate open windows)')
+            agent.ConsoleWrite( agent.CONSOLE_INFO, f'(Failed to enumerate open windows)')
         else:
             num_windows = len(windows)
             max_num = 10
             if num_windows > max_num:
                 windows = windows[:max_num]
-                demon.ConsoleWrite( demon.CONSOLE_INFO, f'Only showing {max_num} windows of {num_windows}. Run \'windowlist\' to get the full list.')
+                agent.ConsoleWrite( agent.CONSOLE_INFO, f'Only showing {max_num} windows of {num_windows}. Run \'windowlist\' to get the full list.')
             if num_windows == 0:
-                demon.ConsoleWrite( demon.CONSOLE_INFO, f'No windows found')
+                agent.ConsoleWrite( agent.CONSOLE_INFO, f'No windows found')
             for window in windows:
-                demon.ConsoleWrite( demon.CONSOLE_INFO, f'  - {window}')
-        demon.ConsoleWrite( demon.CONSOLE_INFO, '')
+                agent.ConsoleWrite( agent.CONSOLE_INFO, f'  - {window}')
+        agent.ConsoleWrite( agent.CONSOLE_INFO, '')
     except Exception as e:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f'Error obtaining Open windows Information: {e}')
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f'Error obtaining Open windows Information: {e}')
 
 # this callback is triggered by every BOF
-# demonID: the ID of the demon that ran the BOF
-# TaskID : the ID of the task returned by demon.InlineExecuteGetOutput
+# agentID: the ID of the agent that ran the BOF
+# TaskID : the ID of the task returned by agent.InlineExecuteGetOutput
 # worked : weather the BOF was able to run or not
 # output : the content of all CALLBACK_OUTPUT
 # error  : the content of all CALLBACK_ERROR
-def bofbelt_callback( demonID, TaskID, worked, output, error ):
-    filename = f'/tmp/bofbelt-{demonID}.json'
+def bofbelt_callback( agentID, TaskID, worked, output, error ):
+    filename = f'/tmp/bofbelt-{agentID}.json'
 
     # first, get the json that contains all the previous BOF output
     try:
@@ -971,82 +971,82 @@ def bofbelt_callback( demonID, TaskID, worked, output, error ):
     # are we done?
     if num_entries == 38:
         os.remove(filename)
-        bofbelt_report( demonID, bof_output )
+        bofbelt_report( agentID, bof_output )
 
     return True
 
-def bofbelt( demonID, *params ):
+def bofbelt( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
     # Getting basic OS information
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "ProductName" )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "ReleaseId" )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentMajorVersionNumber" )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentVersion" )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentBuildNumber" )
-    env_with_callback( demonID, bofbelt_callback )
-    ipconfig_with_callback( demonID, bofbelt_callback )
-    wmi_query_with_callback( demonID, bofbelt_callback, "Select Domain from Win32_ComputerSystem" )
-    wmi_query_with_callback( demonID, bofbelt_callback, "Select * from Win32_ComputerSystem" )
-    uptime_with_callback( demonID, bofbelt_callback )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SYSTEM\\CurrentControlSet\\Control\\Lsa", "RunAsPPL" )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Policies\\Microsoft\\Windows\\SrpV2\\Exe", "EnforcementMode" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "ProductName" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "ReleaseId" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentMajorVersionNumber" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentVersion" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentBuildNumber" )
+    env_with_callback( agentID, bofbelt_callback )
+    ipconfig_with_callback( agentID, bofbelt_callback )
+    wmi_query_with_callback( agentID, bofbelt_callback, "Select Domain from Win32_ComputerSystem" )
+    wmi_query_with_callback( agentID, bofbelt_callback, "Select * from Win32_ComputerSystem" )
+    uptime_with_callback( agentID, bofbelt_callback )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SYSTEM\\CurrentControlSet\\Control\\Lsa", "RunAsPPL" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Policies\\Microsoft\\Windows\\SrpV2\\Exe", "EnforcementMode" )
 
     # Getting User information
 
-    whoami_with_callback( demonID, bofbelt_callback )
+    whoami_with_callback( agentID, bofbelt_callback )
 
     # Getting PowerShell information
 
-    bofdir_with_callback( demonID, bofbelt_callback, 'C:\\Windows\\Microsoft.Net\\Framework\\v1.0.3705\\System.dll' )
-    bofdir_with_callback( demonID, bofbelt_callback, 'C:\\Windows\\Microsoft.Net\\Framework\\v1.1.4322\\System.dll' )
-    bofdir_with_callback( demonID, bofbelt_callback, 'C:\\Windows\\Microsoft.Net\\Framework\\v2.0.50727\\System.dll' )
-    bofdir_with_callback( demonID, bofbelt_callback, 'C:\\Windows\\Microsoft.Net\\Framework\\v3.0\\System.dll' )
-    bofdir_with_callback( demonID, bofbelt_callback, 'C:\\Windows\\Microsoft.Net\\Framework\\v3.5\\System.dll' )
-    bofdir_with_callback( demonID, bofbelt_callback, 'C:\\Windows\\Microsoft.Net\\Framework\\v4.0.30319\\System.dll' )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\PowerShell\\1\\PowerShellEngine", "PowerShellVersion" )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\PowerShell\\3\\PowerShellEngine", "PowerShellVersion" )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell\\Transcription", "EnableTranscripting" )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell\\Transcription", "EnableInvocationHeader" )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell\\ModuleLogging", "EnableModuleLogging" )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell\\ScriptBlockLogging", "EnableScriptBlockLogging" )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell\\ScriptBlockLogging", "EnableScriptBlockInvocationLogging" )
+    bofdir_with_callback( agentID, bofbelt_callback, 'C:\\Windows\\Microsoft.Net\\Framework\\v1.0.3705\\System.dll' )
+    bofdir_with_callback( agentID, bofbelt_callback, 'C:\\Windows\\Microsoft.Net\\Framework\\v1.1.4322\\System.dll' )
+    bofdir_with_callback( agentID, bofbelt_callback, 'C:\\Windows\\Microsoft.Net\\Framework\\v2.0.50727\\System.dll' )
+    bofdir_with_callback( agentID, bofbelt_callback, 'C:\\Windows\\Microsoft.Net\\Framework\\v3.0\\System.dll' )
+    bofdir_with_callback( agentID, bofbelt_callback, 'C:\\Windows\\Microsoft.Net\\Framework\\v3.5\\System.dll' )
+    bofdir_with_callback( agentID, bofbelt_callback, 'C:\\Windows\\Microsoft.Net\\Framework\\v4.0.30319\\System.dll' )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\PowerShell\\1\\PowerShellEngine", "PowerShellVersion" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\PowerShell\\3\\PowerShellEngine", "PowerShellVersion" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell\\Transcription", "EnableTranscripting" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell\\Transcription", "EnableInvocationHeader" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell\\ModuleLogging", "EnableModuleLogging" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell\\ScriptBlockLogging", "EnableScriptBlockLogging" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell\\ScriptBlockLogging", "EnableScriptBlockInvocationLogging" )
 
     # Getting .NET information
 
-    bofdir_with_callback( demonID, bofbelt_callback, 'C:\\Windows\\Microsoft.Net\\Framework\\' )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v3.5", "Version" )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full", "Version" )
+    bofdir_with_callback( agentID, bofbelt_callback, 'C:\\Windows\\Microsoft.Net\\Framework\\' )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v3.5", "Version" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full", "Version" )
 
     # Getting AVs/EDRs information
 
-    wmi_query_with_callback( demonID, bofbelt_callback, "SELECT * FROM AntiVirusProduct", ".", "root\\SecurityCenter2" )
+    wmi_query_with_callback( agentID, bofbelt_callback, "SELECT * FROM AntiVirusProduct", ".", "root\\SecurityCenter2" )
 
     # Getting information about the running processes
 
-    tasklist_with_callback( demonID, bofbelt_callback )
+    tasklist_with_callback( agentID, bofbelt_callback )
 
     # Getting UAC information
 
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "ConsentPromptBehaviorAdmin" )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "EnableLUA" )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "LocalAccountTokenFilterPolicy" )
-    reg_query_with_callback( demonID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "FilterAdministratorToken" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "ConsentPromptBehaviorAdmin" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "EnableLUA" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "LocalAccountTokenFilterPolicy" )
+    reg_query_with_callback( agentID, bofbelt_callback, "HKLM", "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "FilterAdministratorToken" )
 
     # Getting Local Users information
-    userenum_with_callback( demonID, bofbelt_callback )
+    userenum_with_callback( agentID, bofbelt_callback )
 
     # Getting Local Sessions information
 
-    enumlocalsessions_with_callback( demonID, bofbelt_callback )
+    enumlocalsessions_with_callback( agentID, bofbelt_callback )
 
     # Getting Open windows information
 
-    windowlist_with_callback( demonID, bofbelt_callback )
+    windowlist_with_callback( agentID, bofbelt_callback )
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to run Bofbelt" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to run Bofbelt" )
 
     return TaskID
 

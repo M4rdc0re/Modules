@@ -1,18 +1,18 @@
-from havoc import Demon, RegisterCommand
+from vaelix_host import Agent, RegisterCommand
 
-def testdll(demonID, *param):
+def testdll(agentID, *param):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
 
     packer.addstr("test1234")
 
-    demon  = Demon(demonID)
-    TaskID = demon.ConsoleWrite(demon.CONSOLE_TASK, "Tasked demon spawn and inject a test dll")
+    agent  = Agent(agentID)
+    TaskID = agent.ConsoleWrite(agent.CONSOLE_TASK, "Tasked agent spawn and inject a test dll")
     
     arg = packer.getbuffer() 
 
-    demon.DllSpawn(TaskID, "/tmp/test.dll", arg)
+    agent.DllSpawn(TaskID, "/tmp/test.dll", arg)
 
     return TaskID
 

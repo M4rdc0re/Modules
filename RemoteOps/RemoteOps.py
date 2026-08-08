@@ -1,11 +1,11 @@
-from havoc import Demon, RegisterCommand, RegisterModule
+from vaelix_host import Agent, RegisterCommand, RegisterModule
 import re
 
-def adcs_request( demonID, *params ):
+def adcs_request( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     num_params = len(params)
     adcs_request_ca = ''
@@ -16,15 +16,15 @@ def adcs_request( demonID, *params ):
     adcs_request_machine = 0
 
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 6:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     if not params[ 0 ].startswith('/CA:'):
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Invalid first parameter" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Invalid first parameter" )
         return False
 
     adcs_request_ca = params[ 0 ][len('/CA:'):]
@@ -57,17 +57,17 @@ def adcs_request( demonID, *params ):
     packer.addshort(adcs_request_install)
     packer.addshort(adcs_request_machine)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to request an enrollment certificate" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to request an enrollment certificate" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/adcs_request.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/adcs_request.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def addusertogroup( demonID, *params ):
+def addusertogroup( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     num_params = len(params)
     username   = ''
@@ -76,11 +76,11 @@ def addusertogroup( demonID, *params ):
     domain     = ''
 
     if num_params < 4:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 4:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     username  = params[ 0 ]
@@ -98,28 +98,28 @@ def addusertogroup( demonID, *params ):
     packer.addWstr(username)
     packer.addWstr(groupname)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to add the user {username} to the {groupname} group" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to add the user {username} to the {groupname} group" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/addusertogroup.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/addusertogroup.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def enableuser( demonID, *params ):
+def enableuser( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     num_params = len(params)
     username   = ''
     hostname     = ''
 
     if num_params < 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     username  = params[ 0 ]
@@ -131,17 +131,17 @@ def enableuser( demonID, *params ):
     packer.addWstr(hostname)
     packer.addWstr(username)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to enable the user {username}" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to enable the user {username}" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/enableuser.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/enableuser.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def setuserpass( demonID, *params ):
+def setuserpass( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     num_params = len(params)
     username   = ''
@@ -149,11 +149,11 @@ def setuserpass( demonID, *params ):
     computer   = ''
 
     if num_params < 3:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 3:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     username  = params[ 0 ]
@@ -167,17 +167,17 @@ def setuserpass( demonID, *params ):
     packer.addWstr(username)
     packer.addWstr(password)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to change the password of the user {username} to {password}" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to change the password of the user {username} to {password}" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/setuserpass.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/setuserpass.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def reg_delete( demonID, *params ):
+def reg_delete( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     reghives = {
         'HKCR': 0,
@@ -195,11 +195,11 @@ def reg_delete( demonID, *params ):
     delkey        = 0
 
     if num_params < 3:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 3:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     if params[ params_parsed ].upper() not in reghives:
@@ -207,7 +207,7 @@ def reg_delete( demonID, *params ):
         params_parsed += 1
 
     if params[ params_parsed ].upper() not in reghives:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Invalid Hive value" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Invalid Hive value" )
         return False
 
     hive = reghives[ params[ params_parsed ].upper() ]
@@ -229,17 +229,17 @@ def reg_delete( demonID, *params ):
     packer.addstr(key)
     packer.adduint32(delkey)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to delete a registry entry" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to delete a registry entry" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/reg_delete.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/reg_delete.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def reg_save( demonID, *params ):
+def reg_save( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     reghives = {
         'HKCR': 0,
@@ -254,15 +254,15 @@ def reg_save( demonID, *params ):
     filepath   = ''
 
     if num_params < 3:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 3:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     if params[ 0 ].upper() not in reghives:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Invalid Hive" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Invalid Hive" )
         return False
 
     hive     = reghives[ params[ 0 ].upper() ]
@@ -273,17 +273,17 @@ def reg_save( demonID, *params ):
     packer.addstr(filepath)
     packer.adduint32(hive)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to save a registry entry" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to save a registry entry" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/reg_save.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/reg_save.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def reg_set( demonID, *params ):
+def reg_set( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     regtypes = {
         'REG_SZ':  1,
@@ -315,11 +315,11 @@ def reg_set( demonID, *params ):
     regstr        = ''
 
     if num_params < 5:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 6:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     if params[ params_parsed ].upper() not in reghives:
@@ -327,7 +327,7 @@ def reg_set( demonID, *params ):
         params_parsed += 1
 
     if params[ params_parsed ].upper() not in reghives:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Invalid hive" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Invalid hive" )
         return False
 
     hive     = reghives[ params[ params_parsed ].upper() ]
@@ -340,7 +340,7 @@ def reg_set( demonID, *params ):
     params_parsed += 1
 
     if params[ params_parsed ].upper() not in regtypes:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Invalid type" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Invalid type" )
         return False
 
     regstr = params[ params_parsed ].upper()
@@ -359,7 +359,7 @@ def reg_set( demonID, *params ):
             params_parsed += 1
             assert data <= 0xffffffff
         except Exception as e:
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, "Invalid data" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, "Invalid data" )
             return False
         packer.adduint32(data)
     elif regstr == 'REG_MULTI_SZ':
@@ -376,20 +376,20 @@ def reg_set( demonID, *params ):
         packer.addstr(data)
     elif regstr == 'REG_BINARY':
         # TODO: implement openf, readb and closef
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "REG_BINARY is not supported" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "REG_BINARY is not supported" )
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to save a registry entry" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to save a registry entry" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/reg_set.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/reg_set.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def sc_create( demonID, *params ):
+def sc_create( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     service_type = {
         # SERVICE_FILE_SYSTEM_DRIVER
@@ -407,11 +407,11 @@ def sc_create( demonID, *params ):
     _type      = service_type[ 3 ] # SERVICE_WIN32_OWN_PROCESS
 
     if num_params < 6:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 8:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     servicename = params[ 0 ]
@@ -426,7 +426,7 @@ def sc_create( demonID, *params ):
             assert _type in [1, 2, 3, 4]
             _type = service_type[ _type ]
         except Exception as e:
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, "Invalid service type" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, "Invalid service type" )
             return False
     if num_params == 8:
         hostname = params[ 7 ]
@@ -438,14 +438,14 @@ def sc_create( demonID, *params ):
         errormode = int( errormode )
         assert errormode in [0, 1, 2, 3]
     except Exception as e:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Invalid errormode" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Invalid errormode" )
         return False
 
     try:
         startmode = int( startmode )
         assert startmode in [2, 3, 4]
     except Exception as e:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Invalid startmode" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Invalid startmode" )
         return False
 
     packer.addstr(hostname)
@@ -457,27 +457,27 @@ def sc_create( demonID, *params ):
     packer.addshort(startmode)
     packer.addshort(_type)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to create the {servicename} service" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to create the {servicename} service" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/sc_create.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/sc_create.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def sc_start( demonID, *params ):
+def sc_start( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     num_params = len(params)
     hostname   = ''
 
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     servicename = params[ 0 ]
@@ -487,27 +487,27 @@ def sc_start( demonID, *params ):
     packer.addstr(hostname)
     packer.addstr(servicename)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to start the {servicename} service" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to start the {servicename} service" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/sc_start.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/sc_start.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def sc_stop( demonID, *params ):
+def sc_stop( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     num_params = len(params)
     hostname   = ''
 
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     servicename = params[ 0 ]
@@ -517,27 +517,27 @@ def sc_stop( demonID, *params ):
     packer.addstr(hostname)
     packer.addstr(servicename)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to stop the {servicename} service" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to stop the {servicename} service" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/sc_stop.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/sc_stop.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def sc_delete( demonID, *params ):
+def sc_delete( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     num_params = len(params)
     hostname   = ''
 
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     servicename = params[ 0 ]
@@ -547,27 +547,27 @@ def sc_delete( demonID, *params ):
     packer.addstr(hostname)
     packer.addstr(servicename)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to delete the {servicename} service" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to delete the {servicename} service" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/sc_delete.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/sc_delete.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def sc_description( demonID, *params ):
+def sc_description( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     num_params = len(params)
     hostname   = ''
 
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 3:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     servicename = params[ 0 ]
@@ -580,27 +580,27 @@ def sc_description( demonID, *params ):
     packer.addstr(servicename)
     packer.addstr(description)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to set the description of the {servicename} service" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to set the description of the {servicename} service" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/sc_description.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/sc_description.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def adduser( demonID, *params ):
+def adduser( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
     num_params = len(params)
     hostname   = ''
 
     if num_params < 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 3:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     username = params[ 0 ]
@@ -613,9 +613,9 @@ def adduser( demonID, *params ):
     packer.addWstr(password)
     packer.addWstr(hostname)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to add the user {username} in {hostname if hostname != '' else 'the local machine'}" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to add the user {username} in {hostname if hostname != '' else 'the local machine'}" )
 
-    demon.InlineExecute( TaskID, "go", f"bin/adduser.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/adduser.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 

@@ -1,6 +1,6 @@
 /*
  * Vaelix InvokeAssembly — sacrificial-process CLR host for JobDllSpawn.
- * Rewritten from Havoc: AMSI/ETW patch, GetParameters-aware invoke, AddBytes-safe
+ * InvokeAssembly: AMSI/ETW patch, GetParameters-aware invoke, AddBytes-safe
  * assembly length, no Instance.printf dependency for the hot path.
  */
 #include <InvokeAssembly.h>

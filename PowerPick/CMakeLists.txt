@@ -7,7 +7,7 @@ set( PROJECT_NAME PowerPick )
 set( CMAKE_C_STANDARD 11 )
 set( CMAKE_C_COMPILER x86_64-w64-mingw32-gcc )
 
-# adding demon sources
+# adding module sources
 include_directories( include )
 
 set( COMMON_SOURCE
@@ -19,5 +19,5 @@ set( COMMON_SOURCE
 )
 
 
-# add compiled demons
+# add compiled module targets
 add_executable( ${PROJECT_NAME} ${COMMON_SOURCE} )

