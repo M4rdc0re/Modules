@@ -246,16 +246,18 @@ def tasklist_parse_params( agent, params ):
     packer = Packer()
 
     num_params = len(params)
-    hostname   = ''
+    host = '.'
 
     if num_params > 1:
         agent.ConsoleWrite( agent.CONSOLE_ERROR, "Too many parameters" )
         return None
 
-    if num_params > 0:
-        hostname = params[0]
+    if num_params > 0 and params[0]:
+        host = params[0]
 
-    packer.addWstr(hostname)
+    # TrustedSec tasklist BOF expects a full WMI resource path.
+    resource = f"\\\\{host}\\root\\cimv2"
+    packer.addWstr(resource)
 
     return packer.getbuffer()
 
