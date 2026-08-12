@@ -14,7 +14,13 @@ CFLAGS			+= -Wl,-s,--no-seh,--enable-stdcall-fixup
 INCLUDE			= -I include
 SOURCE 			= $(wildcard src/*.c)
 
+# KaynCaller is implemented in C (KaynLdr.c); nasm Util.s is unused.
 x64:
-	nasm -f win64 src/Util.s -o src/Util.o
-	$(COMPILER_x64) src/*.o $(INCLUDE) $(SOURCE) $(CFLAGS) -o bin/$(NAME).x64.dll -lntdll -luser32
-	rm src/*.o
+	mkdir -p bin
+	$(COMPILER_x64) $(INCLUDE) $(SOURCE) $(CFLAGS) -o bin/$(NAME).x64.dll -lntdll -luser32
+
+x86:
+	mkdir -p bin
+	$(COMPILER_x86) $(INCLUDE) $(SOURCE) $(CFLAGS) -Wno-incompatible-pointer-types -Wno-incompatible-function-pointer-types -Wno-int-conversion -o bin/$(NAME).x86.dll -lntdll -luser32
+
+all: x64

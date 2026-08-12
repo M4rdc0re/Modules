@@ -22,7 +22,7 @@ LPVOID KaynCaller(void)
     }
 }
 
-DLLEXPORT VOID KaynLoader( LPVOID lpParameter )
+DLLEXPORT VOID VaelixLoader( LPVOID lpParameter )
 {
     KAYNINSTANCE            Instance        = { 0 };
     HMODULE                 KaynLibraryLdr  = NULL;
