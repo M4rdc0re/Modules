@@ -12,7 +12,7 @@ include_directories( include )
 
 set( COMMON_SOURCE
         src/Win32.c
-        src/KaynLdr.c
+        src/VaelixLdr.c
         src/DllMain.c
         src/Parser.c
 )

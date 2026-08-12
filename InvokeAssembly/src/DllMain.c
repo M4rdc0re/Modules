@@ -1,7 +1,7 @@
 /**
- * Vaelix InvokeAssembly entry — Kayn reflective load + CLR host.
+ * Vaelix InvokeAssembly entry — Vaelix reflective load + CLR host.
  */
-#include <KaynLdr.h>
+#include <VaelixLdr.h>
 #include <stdio.h>
 #include <InvokeAssembly.h>
 

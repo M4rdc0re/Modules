@@ -1,9 +1,9 @@
 /**
- * KaynLdr
+ * VaelixLdr
  * Author: Paul Ungur (@C5pider)
  */
 
-#include <KaynLdr.h>
+#include <VaelixLdr.h>
 #include <stdio.h>
 #include <InvokeAssembly.h>
 

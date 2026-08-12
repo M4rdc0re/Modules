@@ -1,10 +1,10 @@
 /**
- * KaynLdr
+ * VaelixLdr
  * Author: Paul Ungur (@C5pider)
  */
 
-#ifndef KAYNLDR_KAYNLDR_H
-#define KAYNLDR_KAYNLDR_H
+#ifndef VAELIXLDR_VAELIXLDR_H
+#define VAELIXLDR_VAELIXLDR_H
 
 #define _NO_NTDLL_CRT_
 
@@ -46,9 +46,9 @@ typedef struct {
         PVOID   Ntdll;
     } Modules ;
 
-} KAYNINSTANCE, *PKAYNINSTANCE ;
+} VAELIXINSTANCE, *PVAELIXINSTANCE ;
 
-LPVOID  KaynCaller();
+LPVOID  VaelixCaller();
 
 typedef struct {
     WORD offset :12;
@@ -56,11 +56,11 @@ typedef struct {
 } *PIMAGE_RELOC;
 
 PVOID   KGetModuleByHash( DWORD hash );
-PVOID   KGetProcAddressByHash( PKAYNINSTANCE Instance, PVOID DllModuleBase, DWORD FunctionHash, DWORD Ordinal );
-PVOID   KLoadLibrary( PKAYNINSTANCE Instance, LPSTR Module );
+PVOID   KGetProcAddressByHash( PVAELIXINSTANCE Instance, PVOID DllModuleBase, DWORD FunctionHash, DWORD Ordinal );
+PVOID   KLoadLibrary( PVAELIXINSTANCE Instance, LPSTR Module );
 
-VOID    KResolveIAT( PKAYNINSTANCE Instance, PVOID KaynImage, PVOID IatDir );
-VOID    KReAllocSections( PVOID KaynImage, PVOID ImageBase, PVOID Dir );
+VOID    KResolveIAT( PVAELIXINSTANCE Instance, PVOID VaelixImage, PVOID IatDir );
+VOID    KReAllocSections( PVOID VaelixImage, PVOID ImageBase, PVOID Dir );
 
 DWORD   KHashString( LPVOID String, SIZE_T Size );
 SIZE_T  KStringLengthA( LPCSTR String );

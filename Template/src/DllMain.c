@@ -1,9 +1,9 @@
 /**
- * KaynLdr
+ * VaelixLdr
  * Author: Paul Ungur (@C5pider)
  */
 
-#include <KaynLdr.h>
+#include <VaelixLdr.h>
 #include <DModule.h>
 #include <Parser.h>
 #include <stdio.h>
@@ -62,6 +62,6 @@ VOID ModuleMain( PVOID Params )
 
     Instance.Win32.printf( "Test [%d]: %s\n", Size, Test );
 
-    Instance.Win32.printf( "[+] Hello from KaynLdr Module\n" );
+    Instance.Win32.printf( "[+] Hello from VaelixLdr Module\n" );
     Instance.Win32.printf( "[*] Process ID: %d\n", GetCurrentProcessId());
 }

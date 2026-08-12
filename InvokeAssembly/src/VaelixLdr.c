@@ -1,14 +1,14 @@
 /**
- * KaynLdr
+ * VaelixLdr
  * Author: Paul Ungur (@C5pider)
  */
 
-#include <KaynLdr.h>
+#include <VaelixLdr.h>
 
 /* Locate image base by walking backwards from this function for MZ/'PE\0\0' (replaces Util.s). */
-LPVOID KaynCaller(void)
+LPVOID VaelixCaller(void)
 {
-    unsigned char *p = (unsigned char *)(void *)&KaynCaller;
+    unsigned char *p = (unsigned char *)(void *)&VaelixCaller;
     for (;;) {
         p--;
         if (p[0] != 'M' || p[1] != 'Z')
@@ -24,8 +24,8 @@ LPVOID KaynCaller(void)
 
 DLLEXPORT VOID VaelixLoader( LPVOID lpParameter )
 {
-    KAYNINSTANCE            Instance        = { 0 };
-    HMODULE                 KaynLibraryLdr  = NULL;
+    VAELIXINSTANCE            Instance        = { 0 };
+    HMODULE                 VaelixLibraryLdr  = NULL;
     PIMAGE_NT_HEADERS       NtHeaders       = NULL;
     PIMAGE_SECTION_HEADER   SecHeader       = NULL;
     LPVOID                  KVirtualMemory  = NULL;
@@ -37,7 +37,7 @@ DLLEXPORT VOID VaelixLoader( LPVOID lpParameter )
     PIMAGE_DATA_DIRECTORY   ImageDir       = NULL;
 
     // 0. First we need to get our own image base
-    KaynLibraryLdr = KaynCaller();
+    VaelixLibraryLdr = VaelixCaller();
 
     // ------------------------
     // 1. Load needed Functions
@@ -51,7 +51,7 @@ DLLEXPORT VOID VaelixLoader( LPVOID lpParameter )
     // ---------------------------------------------------------------------------
     // 2. Allocate virtual memory and copy headers and section into the new memory
     // ---------------------------------------------------------------------------
-    NtHeaders = C_PTR( KaynLibraryLdr + ( ( PIMAGE_DOS_HEADER ) KaynLibraryLdr )->e_lfanew );
+    NtHeaders = C_PTR( VaelixLibraryLdr + ( ( PIMAGE_DOS_HEADER ) VaelixLibraryLdr )->e_lfanew );
     KMemSize  = NtHeaders->OptionalHeader.SizeOfImage;
 
     if ( NT_SUCCESS( Instance.Win32.NtAllocateVirtualMemory( NtCurrentProcess(), &KVirtualMemory, 0, &KMemSize, MEM_COMMIT, PAGE_READWRITE ) ) )
@@ -62,7 +62,7 @@ DLLEXPORT VOID VaelixLoader( LPVOID lpParameter )
         {
             MemCopy(
                 C_PTR( KVirtualMemory + SecHeader[ i ].VirtualAddress ),    // Section New Memory
-                C_PTR( KaynLibraryLdr + SecHeader[ i ].PointerToRawData ),  // Section Raw Data
+                C_PTR( VaelixLibraryLdr + SecHeader[ i ].PointerToRawData ),  // Section Raw Data
                 SecHeader[ i ].SizeOfRawData                                // Section Size
             );
         }
@@ -118,8 +118,8 @@ DLLEXPORT VOID VaelixLoader( LPVOID lpParameter )
         // --------------------------------
         // 6. Finally executing our DllMain
         // --------------------------------
-        BOOL ( WINAPI *KaynDllMain ) ( PVOID, DWORD, PVOID ) = C_PTR( KVirtualMemory + NtHeaders->OptionalHeader.AddressOfEntryPoint );
-        KaynDllMain( KVirtualMemory, DLL_PROCESS_ATTACH, lpParameter );
+        BOOL ( WINAPI *VaelixDllMain ) ( PVOID, DWORD, PVOID ) = C_PTR( KVirtualMemory + NtHeaders->OptionalHeader.AddressOfEntryPoint );
+        VaelixDllMain( KVirtualMemory, DLL_PROCESS_ATTACH, lpParameter );
     }
 }
 
@@ -159,7 +159,7 @@ __forceinline UINT32 CopyDotStr( PCHAR String )
     }
 }
 
-PVOID KGetProcAddressByHash( PKAYNINSTANCE Instance, PVOID DllModuleBase, DWORD FunctionHash, DWORD Ordinal )
+PVOID KGetProcAddressByHash( PVAELIXINSTANCE Instance, PVOID DllModuleBase, DWORD FunctionHash, DWORD Ordinal )
 {
     PIMAGE_NT_HEADERS       ModuleNtHeader          = NULL;
     PIMAGE_EXPORT_DIRECTORY ModuleExportedDirectory = NULL;
@@ -209,7 +209,7 @@ PVOID KGetProcAddressByHash( PKAYNINSTANCE Instance, PVOID DllModuleBase, DWORD 
     return NULL;
 }
 
-VOID KResolveIAT( PKAYNINSTANCE Instance, LPVOID KaynImage, LPVOID IatDir )
+VOID KResolveIAT( PVAELIXINSTANCE Instance, LPVOID VaelixImage, LPVOID IatDir )
 {
     PIMAGE_THUNK_DATA        OriginalTD        = NULL;
     PIMAGE_THUNK_DATA        FirstTD           = NULL;
@@ -222,11 +222,11 @@ VOID KResolveIAT( PKAYNINSTANCE Instance, LPVOID KaynImage, LPVOID IatDir )
 
     for ( pImportDescriptor = IatDir; pImportDescriptor->Name != 0; ++pImportDescriptor )
     {
-        ImportModuleName = C_PTR( KaynImage + pImportDescriptor->Name );
+        ImportModuleName = C_PTR( VaelixImage + pImportDescriptor->Name );
         ImportModule     = KLoadLibrary( Instance, ImportModuleName );
 
-        OriginalTD       = C_PTR( KaynImage + pImportDescriptor->OriginalFirstThunk );
-        FirstTD          = C_PTR( KaynImage + pImportDescriptor->FirstThunk );
+        OriginalTD       = C_PTR( VaelixImage + pImportDescriptor->OriginalFirstThunk );
+        FirstTD          = C_PTR( VaelixImage + pImportDescriptor->FirstThunk );
 
         for ( ; OriginalTD->u1.AddressOfData != 0 ; ++OriginalTD, ++FirstTD )
         {
@@ -239,7 +239,7 @@ VOID KResolveIAT( PKAYNINSTANCE Instance, LPVOID KaynImage, LPVOID IatDir )
             }
             else
             {
-                pImportByName       = C_PTR( KaynImage + OriginalTD->u1.AddressOfData );
+                pImportByName       = C_PTR( VaelixImage + OriginalTD->u1.AddressOfData );
                 DWORD  FunctionHash = KHashString( pImportByName->Name, KStringLengthA( pImportByName->Name ) );
                 LPVOID Function     = KGetProcAddressByHash( Instance, ImportModule, FunctionHash, 0 );
 
@@ -250,10 +250,10 @@ VOID KResolveIAT( PKAYNINSTANCE Instance, LPVOID KaynImage, LPVOID IatDir )
     }
 }
 
-VOID KReAllocSections( PVOID KaynImage, PVOID ImageBase, PVOID BaseRelocDir )
+VOID KReAllocSections( PVOID VaelixImage, PVOID ImageBase, PVOID BaseRelocDir )
 {
     PIMAGE_BASE_RELOCATION  pImageBR = C_PTR( BaseRelocDir );
-    LPVOID                  OffsetIB = C_PTR( U_PTR( KaynImage ) - U_PTR( ImageBase ) );
+    LPVOID                  OffsetIB = C_PTR( U_PTR( VaelixImage ) - U_PTR( ImageBase ) );
     PIMAGE_RELOC            Reloc    = NULL;
 
     while( pImageBR->VirtualAddress != 0 )
@@ -263,7 +263,7 @@ VOID KReAllocSections( PVOID KaynImage, PVOID ImageBase, PVOID BaseRelocDir )
         while ( ( PBYTE ) Reloc != ( PBYTE ) pImageBR + pImageBR->SizeOfBlock )
         {
             if ( Reloc->type == IMAGE_REL_TYPE )
-                *( ULONG_PTR* ) ( U_PTR( KaynImage ) + pImageBR->VirtualAddress + Reloc->offset ) += ( ULONG_PTR ) OffsetIB;
+                *( ULONG_PTR* ) ( U_PTR( VaelixImage ) + pImageBR->VirtualAddress + Reloc->offset ) += ( ULONG_PTR ) OffsetIB;
 
             else if ( Reloc->type != IMAGE_REL_BASED_ABSOLUTE )
                 __debugbreak(); // TODO: handle this error
@@ -275,7 +275,7 @@ VOID KReAllocSections( PVOID KaynImage, PVOID ImageBase, PVOID BaseRelocDir )
     }
 }
 
-PVOID KLoadLibrary( PKAYNINSTANCE Instance, LPSTR ModuleName )
+PVOID KLoadLibrary( PVAELIXINSTANCE Instance, LPSTR ModuleName )
 {
     if ( ! ModuleName )
         return NULL;
