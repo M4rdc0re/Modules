@@ -181,7 +181,7 @@ VOID InvokeAssembly(PPARSER DataArgs)
     if (AppDomainName && AppDomainNameSize > 0)
         CharStringToWCharString(wAppDomainName, (PCHAR)AppDomainName, MAX_PATH);
     else
-        wcscpy(wAppDomainName, L"VaelixAppDomain");
+        wcscpy(wAppDomainName, L"DefaultDomain");
 
     if (NetVersion && NetVersionSize > 0)
         CharStringToWCharString(wNetVersion, (PCHAR)NetVersion, 32);
