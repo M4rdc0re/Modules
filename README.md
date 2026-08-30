@@ -1,12 +1,12 @@
-# Modules
+# Vaelix Modules
 
-BOF and DllSpawn objects for the **Vaelix** teamserver (`Teamserver.ModulesPath`, default `third_party/Modules` in the [Vaelix](https://github.com/M4rdc0re/Vaelix) tree).
+BOF and DllSpawn objects for the **[Vaelix](https://github.com/M4rdc0re/Vaelix)** teamserver (`Teamserver.ModulesPath`, default `third_party/Modules` in the Vaelix tree).
 
-Authorized red team / penetration testing use only. BOF/COFF loading is **Windows-only**.
+Fork of [HavocFramework/Modules](https://github.com/HavocFramework/Modules), maintained for Vaelix. Authorized red team / penetration testing use only. BOF/COFF loading is **Windows-only**.
 
-Vaelix registers these as **native console commands in Go** (`teamserver/internal/modules`). Object files (`.o`) and DLLs are what the implant loads. The `.py` files are **reference stubs** only (`vaelix_host.py`); they are not executed.
+Vaelix registers these as **native console commands in Go** (`teamserver/internal/modules`). The implant loads object files (`.o`) and DLLs. The `.py` files are **reference stubs** only (`vaelix_host.py`); they are not executed.
 
-Operator catalog, packing, and limits: [Vaelix `docs/modules.md`](https://github.com/M4rdc0re/Vaelix/blob/main/docs/modules.md). Type `help` in the session console for the merged verb list.
+Operator catalog, packing, and limits: [Vaelix `docs/modules.md`](https://github.com/M4rdc0re/Vaelix/blob/master/docs/modules.md). Type `help` in the session console for the merged verb list.
 
 ## Clone
 
@@ -33,23 +33,23 @@ A plain clone without `--recurse-submodules` leaves those source trees empty. Pr
 
 ## Layout (what Vaelix loads)
 
-Paths are relative to `ModulesPath`. Arch is `x64` or `x86` from the agent.
+Paths are relative to `ModulesPath`. Arch is `x64` or `x86` from the agent. `{name}` is the BOF/DLL stem (for example `whoami`, `PowerPick`).
 
 | Directory | Console (Vaelix) | Artifacts |
 |-----------|------------------|-----------|
-| **SituationalAwareness** | `arp`, `whoami`, `ipconfig`, `netstat`, `reg_query`, `ldapsearch`, `tasklist`, … | `ObjectFiles/<name>.<arch>.o` |
-| **RemoteOps** | `adduser`, `sc_create`, `reg_set`, `adcs_request`, … | `bin/<name>.<arch>.o` |
-| **Bofbelt** | `bofbelt` (chains ~38 SA BOFs) | `ObjectFiles/<name>.<arch>.o` — falls back to SA `ObjectFiles/` if missing |
+| **SituationalAwareness** | `arp`, `whoami`, `ipconfig`, `netstat`, `reg_query`, `ldapsearch`, `tasklist`, ... | `ObjectFiles/{name}.{arch}.o` |
+| **RemoteOps** | `adduser`, `sc_create`, `reg_set`, `adcs_request`, ... | `bin/{name}.{arch}.o` |
+| **Bofbelt** | `bofbelt` (chains ~38 SA BOFs) | `ObjectFiles/{name}.{arch}.o` — falls back to SA `ObjectFiles/` if missing |
 | **Domaininfo** | `dcenum` | `Domaininfo.o` (x64 only) |
-| **Jump-exec** | `jump-exec psexec` / `scshell` / `wmi-eventsub` / `wmi-proccreate` | `Psexec/psexec.<arch>.o`, `ScShell/scshell.<arch>.o`, `WMI/EventSub/bin/EventSub.<arch>.o`, `WMI/ProcCreate/bin/ProcCreate.<arch>.o` |
-| **Delegation** | `get-delegation`, `get-spns`, `get-asrep` | `bin/ldapsearch.<arch>.o` |
-| **nanorobeus** | `sessions`, `tgtdeleg`, `kerberoast` | `bin/nanorobeus.<arch>.o` |
-| **nanodump** | `nanodump`, `nanodump_ppl_dump`, `nanodump_ppl_medic`, `nanodump_ssp` | `bin/nanodump.<arch>.o` (+ companion `.dll` for PPL/SSP variants) |
-| **SamDump** | `samdump` | `regdump.<arch>.o` |
+| **Jump-exec** | `jump-exec psexec` / `scshell` / `wmi-eventsub` / `wmi-proccreate` | `Psexec/psexec.{arch}.o`, `ScShell/scshell.{arch}.o`, `WMI/EventSub/bin/EventSub.{arch}.o`, `WMI/ProcCreate/bin/ProcCreate.{arch}.o` |
+| **Delegation** | `get-delegation`, `get-spns`, `get-asrep` | `bin/ldapsearch.{arch}.o` |
+| **nanorobeus** | `sessions`, `tgtdeleg`, `kerberoast` | `bin/nanorobeus.{arch}.o` |
+| **nanodump** | `nanodump`, `nanodump_ppl_dump`, `nanodump_ppl_medic`, `nanodump_ssp` | `bin/nanodump.{arch}.o` (+ companion `.dll` for PPL/SSP variants) |
+| **SamDump** | `samdump` | `regdump.{arch}.o` |
 | **mimidrv** | `mimidrv` | `dist/mimidrv.x64.o` |
-| **NoConsolation** | `noconsolation` | `bin/NoConsolation.<arch>.o` |
-| **PowerPick** | `powerpick` | `bin/PowerPick.<arch>.dll` (DllSpawn) |
-| **InvokeAssembly** | `dotnet execute` | `bin/InvokeAssembly.<arch>.dll` (DllSpawn). Builtin `dotnet inline-execute` is in-process CLR, not this DLL. |
+| **NoConsolation** | `noconsolation` | `bin/NoConsolation.{arch}.o` |
+| **PowerPick** | `powerpick` | `bin/PowerPick.{arch}.dll` (DllSpawn) |
+| **InvokeAssembly** | `dotnet execute` | `bin/InvokeAssembly.{arch}.dll` (DllSpawn). Builtin `dotnet inline-execute` is in-process CLR, not this DLL. |
 | **Template** | — | Skeleton for a new DllSpawn module (`VaelixLdr` + MinGW cmake) |
 
 Sanity check after clone:
