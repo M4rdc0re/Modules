@@ -10,7 +10,7 @@ Operator catalog, packing, and limits: [Vaelix `docs/modules.md`](https://github
 
 ## Clone
 
-This repository is a git submodule of Vaelix, and it **nests further submodules** (TrustedSec / Fortra sources):
+This repository is a git submodule of Vaelix, and it **nests further submodules** (TrustedSec / Fortra sources; patched trees clone from `M4rdc0re` forks, branch `vaelix`):
 
 ```bash
 # From a Vaelix clone
@@ -25,9 +25,9 @@ Nested:
 | Path | Upstream |
 |------|----------|
 | `SituationalAwareness/CS-Situational-Awareness-BOF` | [trustedsec/CS-Situational-Awareness-BOF](https://github.com/trustedsec/CS-Situational-Awareness-BOF) |
-| `RemoteOps/CS-Remote-OPs-BOF` | [trustedsec/CS-Remote-OPs-BOF](https://github.com/trustedsec/CS-Remote-OPs-BOF) |
+| `RemoteOps/CS-Remote-OPs-BOF` | [M4rdc0re/CS-Remote-OPs-BOF](https://github.com/M4rdc0re/CS-Remote-OPs-BOF) (`vaelix`; upstream [trustedsec](https://github.com/trustedsec/CS-Remote-OPs-BOF)) |
 | `nanodump/nanodump` | [fortra/nanodump](https://github.com/fortra/nanodump) |
-| `NoConsolation/No-Consolation` | [fortra/No-Consolation](https://github.com/fortra/No-Consolation) |
+| `NoConsolation/No-Consolation` | [M4rdc0re/No-Consolation](https://github.com/M4rdc0re/No-Consolation) (`vaelix`; upstream [fortra](https://github.com/fortra/No-Consolation)) |
 
 A plain clone without `--recurse-submodules` leaves those source trees empty. Prebuilt objects under `ObjectFiles/` / `bin/` may still be present in this repo.
 
