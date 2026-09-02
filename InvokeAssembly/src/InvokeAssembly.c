@@ -25,7 +25,7 @@ static int patch_fn(void *addr)
 {
     if (!addr) return -1;
     DWORD old = 0;
-    if (!VirtualProtect(addr, 16, PAGE_EXECUTE_READWRITE, &old)) return -1;
+    if (!VirtualProtect(addr, 16, PAGE_READWRITE, &old)) return -1;
     unsigned char *p = (unsigned char *)addr;
     p[0] = 0x33;
     p[1] = 0xC0;
